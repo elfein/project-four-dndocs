@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  attack: false
+  components: MyString
+  casting_time: MyString
+  duration: MyString
+  character: one
+  name: MyString
+  die_number: 1
+  die_type: 1
+  damage_type: MyString
+  description: MyString
+  die_number_2: 1
+  die_type_2: 1
+  damage_type_2: MyString
+
+two:
+  attack: false
+  components: MyString
+  casting_time: MyString
+  duration: MyString
+  character: two
+  name: MyString
+  die_number: 1
+  die_type: 1
+  damage_type: MyString
+  description: MyString
+  die_number_2: 1
+  die_type_2: 1
+  damage_type_2: MyString

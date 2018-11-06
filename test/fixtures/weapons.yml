@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  character: one
+  name: MyString
+  die_number: 1
+  die_type: 1
+  damage_type: MyString
+  description: MyString
+
+two:
+  character: two
+  name: MyString
+  die_number: 1
+  die_type: 1
+  damage_type: MyString
+  description: MyString
