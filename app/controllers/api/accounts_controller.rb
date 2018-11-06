@@ -22,7 +22,7 @@ class Api::AccountsController < ApplicationController
 
     def destroy
         @account = Account.find(params[:id]).delete
-        render status: :ok
+        render status: 200
     end
 
     private
