@@ -21,7 +21,8 @@ This spell\'s damage increases by 1d4 when you reach 5th level (2d4), 11th level
 
 pk = riley.items.create(name: 'Painter\'s Kit', description: 'A simple set of paints and brushes.')
 cloak = sylfare.items.create(name: 'Cloak of Many Fashions', description: 'The color and appearance of this cloak can be changed at will.')
+cloak = sylfare.items.create(name: 'Disguise Kit', description: 'A cloak, hat, and set of makeup.')
 
-one = riley.encounters.create()
+one = riley.encounters.create(encounter_type: 'Fight')
 
 hit = one.actions.create(diff: -5, diff_type: 'Piercing', source: 'Knight\'s Broadsword')
