@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_06_232522) do
+ActiveRecord::Schema.define(version: 2018_11_07_021016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,18 +19,6 @@ ActiveRecord::Schema.define(version: 2018_11_06_232522) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "actions", force: :cascade do |t|
-    t.bigint "encounter_id"
-    t.integer "diff"
-    t.string "diff_type"
-    t.string "source"
-    t.integer "diff_2"
-    t.string "diff_2_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["encounter_id"], name: "index_actions_on_encounter_id"
   end
 
   create_table "characters", force: :cascade do |t|
@@ -59,6 +47,18 @@ ActiveRecord::Schema.define(version: 2018_11_06_232522) do
     t.datetime "updated_at", null: false
     t.string "encounter_type"
     t.index ["character_id"], name: "index_encounters_on_character_id"
+  end
+
+  create_table "hp_actions", force: :cascade do |t|
+    t.bigint "encounter_id"
+    t.integer "diff"
+    t.string "diff_type"
+    t.string "source"
+    t.integer "diff_2"
+    t.string "diff_2_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["encounter_id"], name: "index_hp_actions_on_encounter_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -107,9 +107,9 @@ ActiveRecord::Schema.define(version: 2018_11_06_232522) do
     t.index ["character_id"], name: "index_weapons_on_character_id"
   end
 
-  add_foreign_key "actions", "encounters"
   add_foreign_key "characters", "accounts"
   add_foreign_key "encounters", "characters"
+  add_foreign_key "hp_actions", "encounters"
   add_foreign_key "items", "characters"
   add_foreign_key "spells", "characters"
   add_foreign_key "weapons", "characters"
