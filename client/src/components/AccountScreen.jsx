@@ -20,13 +20,15 @@ export default class AccountScreen extends Component {
         this.setState({ account })
     }
 
-  render() {
-    return (
-      <div>
-        <Link to='/' >Sign Out</Link>
-        <h2>{this.state.account.name}</h2>
-        <CharacterList id={this.props.match.params.id} />
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div>
+                <Link to='/' >Sign Out</Link>
+                <h2>{this.state.account.name}</h2>
+                <Link to={`/accounts/${this.props.match.params.id}/edit`}>Edit</Link>
+                <CharacterList id={this.props.match.params.id} />
+                <Link to={`/accounts/${this.props.match.params.id}/characters/new`} ><button>New Character</button></Link>
+            </div>
+        )
+    }
 }
