@@ -19,7 +19,6 @@ export default class CharacterItem extends Component {
 
     getCharacter = async () => {
         const response = await axios.get(`/api/characters/${this.props.character.id}`)
-        console.log(response)
         return response.data
     }
 
