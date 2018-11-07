@@ -25,4 +25,4 @@ cloak = sylfare.items.create(name: 'Disguise Kit', description: 'A cloak, hat, a
 
 one = riley.encounters.create(encounter_type: 'Fight')
 
-hit = one.hp_actions.create(diff: -5, diff_type: 'Piercing', source: 'Knight\'s Broadsword')
+# hit = one.hp_actions.create(diff: -5, diff_type: 'Piercing', source: 'Knight\'s Broadsword')
