@@ -1,6 +1,6 @@
 class Api::AccountsController < ApplicationController
     def index
-        @accounts = Account.all
+        @accounts = Account.all.order("name")
         render json: @accounts
     end
 
