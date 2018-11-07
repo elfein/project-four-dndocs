@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       resources :encounters
     end
     resources :encounters, shallow: true do
-      resources :hp_actions
+      resources :hpactions
     end
   end
 end
