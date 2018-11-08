@@ -76,6 +76,11 @@ export default class NewCharacterScreen extends Component {
         } else {
             newCharacter.prof = ''
         }
+        if (newCharacter.max_hp) {
+            newCharacter.current_hp = newCharacter.max_hp
+        } else {
+            newCharacter.current_hp = ''
+        }
         this.setState({ newCharacter })
     }
 
