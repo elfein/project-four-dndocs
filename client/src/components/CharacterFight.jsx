@@ -4,12 +4,12 @@ import axios from 'axios'
 
 const StyledModalGroup = styled.div`
 text-align: center;
-.damage-group {
+.type-group {
     display: flex;
     flex-wrap: wrap;
     justify-content:space-around;
 }
-.damage {
+.damage, .healsource {
     opacity: 0.6;
     img {
         width: 50px;
@@ -91,12 +91,12 @@ export default class CharacterFight extends Component {
             source: ''
         },
         diffError: false,
-        diffTypeError: false
+        diffTypeError: false,
+        healsourceError: false
     }
 
     setDefaultHeal = () => {
         const newHpaction = { ...this.state.newHpaction }
-        newHpaction.source = 'Spell'
         newHpaction.diff_type = 'Healing'
         this.setState({ newHpaction })
     }
@@ -114,7 +114,8 @@ export default class CharacterFight extends Component {
                 diff_type: '',
                 source: ''
             },
-            diffError: false
+            diffError: false, 
+            healsourceError: false
         })
     }
 
@@ -174,10 +175,19 @@ export default class CharacterFight extends Component {
         }
     }
 
+    changeHealType = async (event) => {
+        const newHpaction = { ...this.state.newHpaction }
+        newHpaction['source'] = event.target.id
+        await this.setState({ newHpaction })
+        this.opacityChange()
+    }
+
     handleHealSubmit = async (event) => {
         event.preventDefault()
-        if (this.state.newHpaction.diff) {
-            this.setState({ diffError: false })
+        if (this.state.newHpaction.diff
+            && this.state.newHpaction.source
+            ) {
+            this.setState({ diffError: false, healsourceError: false })
             const hpaction = await axios.post(`/api/encounters/${this.props.encounter.id}/hpactions`, this.state.newHpaction)
             await axios.put(`/api/characters/${this.props.character.id}`, { current_hp: (this.props.character.current_hp + hpaction.data.diff) })
             await this.props.getCharacter()
@@ -189,8 +199,10 @@ export default class CharacterFight extends Component {
                 },
                 showHealModal: false
             })
-        } else {
+        } else if (!this.state.newHpaction.diff) {
             this.setState({ diffError: true })
+        } else if (!this.state.newHpaction.source) {
+            this.setState({ diffError: false, healsourceError: true })
         }
     }
 
@@ -260,9 +272,16 @@ export default class CharacterFight extends Component {
                             <span>HP</span>
                         </div>
                         <h6 className={this.state.diffError ? '' : 'no-error'} >Heal amount cannot be less than zero.</h6>
-                        <div onChange={this.handleChange}>
-                            <input type='radio' name='source' id='spellOption' value='Spell' defaultChecked /><label>Spell</label>
-                            <input type='radio' name='source' id='potionOption' value='Potion' /><label>Potion</label>
+                        <h6 className={this.state.healsourceError ? '' : 'no-error'} >Heal type must be chosen.</h6>
+                        <div className="type-group">
+                            <div className="healsource" onClick={this.changeHealType} id='Spell' >
+                                <img id='Spell' src='https://66.media.tumblr.com/3125e0c0bb2897858b9eef270385bb9b/tumblr_phw59yBB8J1uj0ljmo2_1280.png' alt='spell' />
+                                <h6 id='Spell' >Spell</h6>
+                            </div>
+                            <div className="healsource" onClick={this.changeHealType} id='Potion' >
+                                <img id='Potion' src='https://66.media.tumblr.com/3125e0c0bb2897858b9eef270385bb9b/tumblr_phw59yBB8J1uj0ljmo2_1280.png' alt='potion' />
+                                <h6 id='Potion' >Potion</h6>
+                            </div>
                         </div>
                         <div>
                             <button onClick={this.hideHealModal}>Cancel</button>
@@ -282,8 +301,8 @@ export default class CharacterFight extends Component {
                         </div>
                         <h6 className={this.state.diffError ? '' : 'no-error'} >Hit amount cannot be less than zero.</h6>
                         <p>Damage Type:</p>
-                        <h6 className={this.state.diffTypeError ? '' : 'no-error'} >Damage type must be assigned.</h6>
-                        <div className="damage-group">
+                        <h6 className={this.state.diffTypeError ? '' : 'no-error'} >Damage type must be chosen.</h6>
+                        <div className="type-group">
                             <div className="damage" onClick={this.changeHitType} id='Acid' >
                                 <img id='Acid' src='https://66.media.tumblr.com/c8cb57bf0209cb27cf0a171ea7568498/tumblr_phvqz6OWAt1uj0ljmo1_1280.png' alt='acid' />
                                 <h6 id='Acid' >Acid</h6>
