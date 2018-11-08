@@ -60,6 +60,10 @@ export default class CharacterInfo extends Component {
         this.setState({ showFightModal: !this.state.showFightModal })
     }
 
+    hideFightModal = () => {
+        this.setState({ showFightModal: false })
+    }
+
     render() {
         const character = this.props.character
         return (
@@ -76,10 +80,10 @@ export default class CharacterInfo extends Component {
                 <StyledModalGroup>
                     <div id='modal' className={this.state.showFightModal ? '' : 'hidden'}>
                         <p>Ready?</p>
-                        <button onClick={this.showFightModal}>Wait...</button>
+                        <button onClick={this.hideFightModal}>Wait...</button>
                         <button id='fight' onClick={this.props.startFight} >Bring it on!</button>
                     </div>
-                    <div id='overlay' onClick={this.showFightModal} className={this.state.showFightModal ? '' : 'hidden'} ></div>
+                    <div id='overlay' onClick={this.hideFightModal} className={this.state.showFightModal ? '' : 'hidden'} ></div>
                 </StyledModalGroup>
             </div>
         )

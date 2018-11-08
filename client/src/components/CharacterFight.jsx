@@ -10,6 +10,7 @@ text-align: center;
     justify-content:space-around;
 }
 .damage {
+    opacity: 0.6;
     img {
         width: 50px;
     }
@@ -20,6 +21,12 @@ text-align: center;
     h6 {
         margin: 4px 0 10px 0;
     }
+    &:hover {
+        opacity: 1;
+    }
+}
+.selected {
+    opacity: 1;
 }
 
 #overlay {
@@ -41,7 +48,10 @@ text-align: center;
 } 
 }
 #modal {
-    button {
+.no-error {
+    display: none;
+}
+button {
   margin: 10px 20px;
 }
 p {
@@ -79,7 +89,9 @@ export default class CharacterFight extends Component {
             diff: '',
             diff_type: '',
             source: ''
-        }
+        },
+        diffError: false,
+        diffTypeError: false
     }
 
     setDefaultHeal = () => {
@@ -101,7 +113,8 @@ export default class CharacterFight extends Component {
                 diff: '',
                 diff_type: '',
                 source: ''
-            }
+            },
+            diffError: false
         })
     }
 
@@ -116,8 +129,11 @@ export default class CharacterFight extends Component {
                 diff: '',
                 diff_type: '',
                 source: ''
-            }
+            },
+            diffError: false,
+            diffTypeError: false
         })
+        this.opacityChange()
     }
 
     showEndModal = () => {
@@ -140,42 +156,65 @@ export default class CharacterFight extends Component {
         this.setState({ newHpaction })
     }
 
-    changeHitType = (event) => {
+    changeHitType = async (event) => {
         const newHpaction = { ...this.state.newHpaction }
-        console.log(event.target)
         newHpaction['diff_type'] = event.target.id
-        this.setState({ newHpaction })
+        await this.setState({ newHpaction })
+        this.opacityChange()
+    }
+
+    opacityChange = async () => {
+        const divs = await document.getElementsByClassName('damage')
+        for (let i = 0; i < divs.length; i++) {
+            if (divs[i].id === this.state.newHpaction.diff_type) {
+                divs[i].classList.add('selected')
+            } else {
+                divs[i].classList.remove('selected')
+            }
+        }
     }
 
     handleHealSubmit = async (event) => {
         event.preventDefault()
-        const hpaction = await axios.post(`/api/encounters/${this.props.encounter.id}/hpactions`, this.state.newHpaction)
-        await axios.put(`/api/characters/${this.props.character.id}`, { current_hp: (this.props.character.current_hp + hpaction.data.diff) })
-        await this.props.getCharacter()
-        this.setState({
-            newHpaction: {
-                diff: '',
-                diff_type: '',
-                source: ''
-            },
-            showHealModal: false
-        })
+        if (this.state.newHpaction.diff) {
+            this.setState({ diffError: false })
+            const hpaction = await axios.post(`/api/encounters/${this.props.encounter.id}/hpactions`, this.state.newHpaction)
+            await axios.put(`/api/characters/${this.props.character.id}`, { current_hp: (this.props.character.current_hp + hpaction.data.diff) })
+            await this.props.getCharacter()
+            this.setState({
+                newHpaction: {
+                    diff: '',
+                    diff_type: '',
+                    source: ''
+                },
+                showHealModal: false
+            })
+        } else {
+            this.setState({ diffError: true })
+        }
     }
 
     handleHitSubmit = async (event) => {
         event.preventDefault()
-        await this.makeDiffNegative()
-        const hpaction = await axios.post(`/api/encounters/${this.props.encounter.id}/hpactions`, this.state.newHpaction)
-        await axios.put(`/api/characters/${this.props.character.id}`, { current_hp: (this.props.character.current_hp + hpaction.data.diff) })
-        await this.props.getCharacter()
-        this.setState({
-            newHpaction: {
-                diff: '',
-                diff_type: '',
-                source: ''
-            },
-            showHitModal: false
-        })
+        if (this.state.newHpaction.diff
+            && this.state.newHpaction.diff_type) {
+            this.setState({ diffError: false, diffTypeError: false, showHitModal: false })
+            await this.makeDiffNegative()
+            const hpaction = await axios.post(`/api/encounters/${this.props.encounter.id}/hpactions`, this.state.newHpaction)
+            await axios.put(`/api/characters/${this.props.character.id}`, { current_hp: (this.props.character.current_hp + hpaction.data.diff) })
+            await this.props.getCharacter()
+            this.setState({
+                newHpaction: {
+                    diff: '',
+                    diff_type: '',
+                    source: ''
+                }
+            })
+        } else if (!this.state.newHpaction.diff) {
+            this.setState({ diffError: true })
+        } else if (!this.state.newHpaction.diff_type) {
+            this.setState({ diffError: false, diffTypeError: true })
+        }
     }
 
     makeDiffNegative = async () => {
@@ -220,6 +259,7 @@ export default class CharacterFight extends Component {
                             <input type='number' name='diff' value={this.state.newHpaction.diff} onChange={this.handleChange} />
                             <span>HP</span>
                         </div>
+                        <h6 className={this.state.diffError ? '' : 'no-error'} >Heal amount cannot be less than zero.</h6>
                         <div onChange={this.handleChange}>
                             <input type='radio' name='source' id='spellOption' value='Spell' defaultChecked /><label>Spell</label>
                             <input type='radio' name='source' id='potionOption' value='Potion' /><label>Potion</label>
@@ -240,7 +280,9 @@ export default class CharacterFight extends Component {
                             <input type='number' name='diff' value={this.state.newHpaction.diff} onChange={this.handleChange} />
                             <span>HP</span>
                         </div>
+                        <h6 className={this.state.diffError ? '' : 'no-error'} >Hit amount cannot be less than zero.</h6>
                         <p>Damage Type:</p>
+                        <h6 className={this.state.diffTypeError ? '' : 'no-error'} >Damage type must be assigned.</h6>
                         <div className="damage-group">
                             <div className="damage" onClick={this.changeHitType} id='Acid' >
                                 <img id='Acid' src='https://66.media.tumblr.com/c8cb57bf0209cb27cf0a171ea7568498/tumblr_phvqz6OWAt1uj0ljmo1_1280.png' alt='acid' />
@@ -305,6 +347,17 @@ export default class CharacterFight extends Component {
                         </div>
                     </div>
                     <div id='overlay' onClick={this.hideHitModal} className={this.state.showHitModal ? '' : 'hidden'} ></div>
+                </StyledModalGroup>
+
+                {/* ---------------- Hit Modal ---------------- */}
+                <StyledModalGroup>
+                    <div id='modal' className={this.props.fightMode ? 'hidden' : ''}>
+                        <p>You need to enter a fight to use this screen!</p>
+                        <div>
+                            <button onClick={this.props.toggleInfo}>Go Back</button>
+                        </div>
+                    </div>
+                    <div id='overlay' onClick={this.hideEndModal} className={this.props.fightMode ? 'hidden' : ''}></div>
                 </StyledModalGroup>
 
             </div>

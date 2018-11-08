@@ -23,7 +23,8 @@ export default class CharacterContainer extends Component {
     classImg: '',
     showInfo: true,
     showFight: false,
-    showLog: false
+    showLog: false,
+    fightMode: false
   }
 
   setClassImg = () => {
@@ -85,34 +86,45 @@ export default class CharacterContainer extends Component {
   }
 
   toggleFight = () => {
+    this.checkForFight()
     this.setState({ showInfo: false, showFight: true, showLog: false })
   }
 
   startFight = async () => {
-      const fight = await axios.post(`/api/characters/${this.props.match.params.id}/encounters`, {encounter_type: 'Fight'})
-      this.setState({ lastEncounter: fight.data })
-      this.toggleFight()
-    }
+    const fight = await axios.post(`/api/characters/${this.props.match.params.id}/encounters`, { encounter_type: 'Fight' })
+    this.setState({ lastEncounter: fight.data })
+    this.toggleFight()
+  }
 
-    resetEncounter = async () => {
-      this.setState({ lastEncounter: {
+  resetEncounter = async () => {
+    this.setState({
+      lastEncounter: {
         id: ''
-      } })
+      }
+    })
+  }
+
+  checkForFight = () => {
+    if (this.state.lastEncounter.encounter_type === "Fight") {
+      this.setState({ fightMode: true })
+    } else {
+      this.setState({ fightMode: false })
     }
+  }
 
   takeLongRest = async () => {
     // check if healing is necessary
     if (this.state.character.current_hp !== this.state.character.max_hp) {
       // create a new encounter for the long rest action to nest within
-    const restEncounter = await axios.post(`/api/characters/${this.props.match.params.id}/encounters`, {encounter_type: 'Long Rest'})
-    await axios.post(`/api/encounters/${restEncounter.data.id}/hpactions`, {
-      diff: (this.state.character.max_hp - this.state.character.current_hp),
-      diff_type: 'Healing',
-      source: 'Long Rest'
-    })
-    const character = { ...this.state.character }
-    character.current_hp = this.state.character.max_hp
-    this.setState({ character })
+      const restEncounter = await axios.post(`/api/characters/${this.props.match.params.id}/encounters`, { encounter_type: 'Long Rest' })
+      await axios.post(`/api/encounters/${restEncounter.data.id}/hpactions`, {
+        diff: (this.state.character.max_hp - this.state.character.current_hp),
+        diff_type: 'Healing',
+        source: 'Long Rest'
+      })
+      const character = { ...this.state.character }
+      character.current_hp = this.state.character.max_hp
+      this.setState({ character, lastEncounter: restEncounter.data })
     }
   }
 
@@ -139,6 +151,7 @@ export default class CharacterContainer extends Component {
             toggleInfo={this.toggleInfo}
             getCharacter={this.getCharacter}
             resetEncounter={this.resetEncounter}
+            fightMode={this.state.fightMode}
           /> : null}
 
         <button onClick={this.toggleInfo}>Info</button>
