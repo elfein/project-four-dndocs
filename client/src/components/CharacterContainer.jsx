@@ -94,6 +94,12 @@ export default class CharacterContainer extends Component {
       this.toggleFight()
     }
 
+    resetEncounter = async () => {
+      this.setState({ lastEncounter: {
+        id: ''
+      } })
+    }
+
   takeLongRest = async () => {
     // check if healing is necessary
     if (this.state.character.current_hp !== this.state.character.max_hp) {
@@ -132,6 +138,7 @@ export default class CharacterContainer extends Component {
             classImg={this.state.classImg}
             toggleInfo={this.toggleInfo}
             getCharacter={this.getCharacter}
+            resetEncounter={this.resetEncounter}
           /> : null}
 
         <button onClick={this.toggleInfo}>Info</button>

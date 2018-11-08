@@ -74,6 +74,7 @@ export default class CharacterFight extends Component {
     state = {
         showHealModal: false,
         showHitModal: false,
+        showEndModal: false,
         newHpaction: {
             diff: '',
             diff_type: '',
@@ -106,7 +107,6 @@ export default class CharacterFight extends Component {
 
     showHitModal = () => {
         this.setState({ showHitModal: !this.state.showHitModal })
-        // this.setDefaultHeal()
     }
 
     hideHitModal = () => {
@@ -118,6 +118,20 @@ export default class CharacterFight extends Component {
                 source: ''
             }
         })
+    }
+
+    showEndModal = () => {
+        this.setState({ showEndModal: true })
+    }
+
+    hideEndModal = () => {
+        this.setState({ showEndModal: false })
+    }
+
+    endFight = () => {
+        this.hideEndModal()
+        this.props.toggleInfo()
+        this.props.resetEncounter()
     }
 
     handleChange = (event) => {
@@ -165,7 +179,7 @@ export default class CharacterFight extends Component {
     }
 
     makeDiffNegative = async () => {
-        const newHpaction = {...this.state.newHpaction}
+        const newHpaction = { ...this.state.newHpaction }
         newHpaction.diff = 0 - newHpaction.diff
         await this.setState({ newHpaction })
     }
@@ -178,7 +192,7 @@ export default class CharacterFight extends Component {
                 <img src={this.props.classImg} alt='classpic' />
                 <div>
                     <h3>Encounter #{this.props.encounter.id}</h3>
-                    <button onClick={this.toggleModal}>End Fight</button>
+                    <button onClick={this.showEndModal}>End Fight</button>
                     <span><h1>HP: {character.current_hp}</h1> / {character.max_hp} </span>
                 </div>
                 <div>
@@ -186,6 +200,19 @@ export default class CharacterFight extends Component {
                     <button onClick={this.showHitModal}>Take Hit</button>
                 </div>
 
+                {/* ---------------- End Fight Modal ---------------- */}
+                <StyledModalGroup>
+                    <div id='modal' className={this.state.showEndModal ? '' : 'hidden'}>
+                        <p>Are you sure you want to end this fight?</p>
+                        <div>
+                            <button onClick={this.hideEndModal}>Cancel</button>
+                            <button id='end' onClick={this.endFight} >Confirm</button>
+                        </div>
+                    </div>
+                    <div id='overlay' onClick={this.hideEndModal} className={this.state.showEndModal ? '' : 'hidden'}></div>
+                </StyledModalGroup>
+
+                {/* ---------------- Heal Modal ---------------- */}
                 <StyledModalGroup>
                     <div id='modal' className={this.state.showHealModal ? '' : 'hidden'}>
                         <div>
@@ -205,6 +232,7 @@ export default class CharacterFight extends Component {
                     <div id='overlay' onClick={this.hideHealModal} className={this.state.showHealModal ? '' : 'hidden'} ></div>
                 </StyledModalGroup>
 
+                {/* ---------------- Hit Modal ---------------- */}
                 <StyledModalGroup>
                     <div id='modal' className={this.state.showHitModal ? '' : 'hidden'}>
                         <div>
