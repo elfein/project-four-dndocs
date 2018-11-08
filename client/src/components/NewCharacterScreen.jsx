@@ -47,6 +47,7 @@ export default class NewCharacterScreen extends Component {
             })
             this.setState({ redirectId: response.data.id })
             this.setState({ redirect: true })
+            // checking for errors below
         } else if (!this.state.newCharacter.name) {
             this.setState({ nameError: true })
         } else if (!this.state.newCharacter.class_name) {
