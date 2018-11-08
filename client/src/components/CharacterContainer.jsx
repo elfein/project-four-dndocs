@@ -88,9 +88,16 @@ export default class CharacterContainer extends Component {
     this.setState({ showInfo: false, showFight: true, showLog: false })
   }
 
+  startFight = async () => {
+      const fight = await axios.post(`/api/characters/${this.props.match.params.id}/encounters`, {encounter_type: 'Fight'})
+      this.setState({ lastEncounter: fight.data })
+      this.toggleFight()
+    }
+
   takeLongRest = async () => {
+    // check if healing is necessary
     if (this.state.character.current_hp !== this.state.character.max_hp) {
-      console.log(this.state.character.max_hp - this.state.character.current_hp)
+      // create a new encounter for the long rest action to nest within
     const restEncounter = await axios.post(`/api/characters/${this.props.match.params.id}/encounters`, {encounter_type: 'Long Rest'})
     await axios.post(`/api/encounters/${restEncounter.data.id}/hpactions`, {
       diff: (this.state.character.max_hp - this.state.character.current_hp),
@@ -114,7 +121,7 @@ export default class CharacterContainer extends Component {
           <CharacterInfo
             character={character}
             classImg={this.state.classImg}
-            toggleFight={this.toggleFight}
+            startFight={this.startFight}
             takeLongRest={this.takeLongRest}
           /> : null}
 
@@ -124,6 +131,7 @@ export default class CharacterContainer extends Component {
             character={character}
             classImg={this.state.classImg}
             toggleInfo={this.toggleInfo}
+            getCharacter={this.getCharacter}
           /> : null}
 
         <button onClick={this.toggleInfo}>Info</button>
