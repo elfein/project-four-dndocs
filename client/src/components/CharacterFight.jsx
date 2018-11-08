@@ -117,6 +117,7 @@ export default class CharacterFight extends Component {
             diffError: false, 
             healsourceError: false
         })
+        this.healOpacityChange()
     }
 
     showHitModal = () => {
@@ -134,7 +135,7 @@ export default class CharacterFight extends Component {
             diffError: false,
             diffTypeError: false
         })
-        this.opacityChange()
+        this.hitOpacityChange()
     }
 
     showEndModal = () => {
@@ -161,13 +162,24 @@ export default class CharacterFight extends Component {
         const newHpaction = { ...this.state.newHpaction }
         newHpaction['diff_type'] = event.target.id
         await this.setState({ newHpaction })
-        this.opacityChange()
+        this.hitOpacityChange()
     }
 
-    opacityChange = async () => {
+    hitOpacityChange = async () => {
         const divs = await document.getElementsByClassName('damage')
         for (let i = 0; i < divs.length; i++) {
             if (divs[i].id === this.state.newHpaction.diff_type) {
+                divs[i].classList.add('selected')
+            } else {
+                divs[i].classList.remove('selected')
+            }
+        }
+    }
+
+    healOpacityChange = async () => {
+        const divs = await document.getElementsByClassName('healsource')
+        for (let i = 0; i < divs.length; i++) {
+            if (divs[i].id === this.state.newHpaction.source) {
                 divs[i].classList.add('selected')
             } else {
                 divs[i].classList.remove('selected')
@@ -179,7 +191,7 @@ export default class CharacterFight extends Component {
         const newHpaction = { ...this.state.newHpaction }
         newHpaction['source'] = event.target.id
         await this.setState({ newHpaction })
-        this.opacityChange()
+        this.healOpacityChange()
     }
 
     handleHealSubmit = async (event) => {
@@ -199,6 +211,7 @@ export default class CharacterFight extends Component {
                 },
                 showHealModal: false
             })
+            this.healOpacityChange()
         } else if (!this.state.newHpaction.diff) {
             this.setState({ diffError: true })
         } else if (!this.state.newHpaction.source) {
@@ -222,6 +235,7 @@ export default class CharacterFight extends Component {
                     source: ''
                 }
             })
+            this.hitOpacityChange()
         } else if (!this.state.newHpaction.diff) {
             this.setState({ diffError: true })
         } else if (!this.state.newHpaction.diff_type) {
@@ -279,7 +293,7 @@ export default class CharacterFight extends Component {
                                 <h6 id='Spell' >Spell</h6>
                             </div>
                             <div className="healsource" onClick={this.changeHealType} id='Potion' >
-                                <img id='Potion' src='https://66.media.tumblr.com/3125e0c0bb2897858b9eef270385bb9b/tumblr_phw59yBB8J1uj0ljmo2_1280.png' alt='potion' />
+                                <img id='Potion' src='https://66.media.tumblr.com/c6776567a92c68365fa0c92e7886f04b/tumblr_phw59yBB8J1uj0ljmo1_1280.png' alt='potion' />
                                 <h6 id='Potion' >Potion</h6>
                             </div>
                         </div>
