@@ -76,7 +76,6 @@ export default class EditAccountScreen extends Component {
 
     getAccount = async () => {
         const response = await axios.get(`/api/accounts/${this.props.match.params.id}`)
-        console.log('hello')
         this.setState({ updatedAccount: response.data, account: response.data })
     }
 
