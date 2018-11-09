@@ -28,7 +28,7 @@ const StyledModalGroup = styled.div`
 p {
   text-align: center;
 }
-#fight {
+#delete {
   color: red;
 }
 position: fixed;
@@ -195,6 +195,7 @@ export default class WeaponInfoItem extends Component {
 
           </div>
           : null}
+
         <StyledModalGroup>
           <div id='modal' className={this.state.showDelete ? '' : 'hidden'}>
             <p>Are you sure you want to delete this weapon?</p>
