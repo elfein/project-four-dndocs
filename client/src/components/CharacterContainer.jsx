@@ -141,6 +141,7 @@ export default class CharacterContainer extends Component {
             classImg={this.state.classImg}
             startFight={this.startFight}
             takeLongRest={this.takeLongRest}
+            getCharacter={this.getCharacter}
           /> : null}
 
         {this.state.showFight ?

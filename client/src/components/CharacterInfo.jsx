@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import CharacterDataContainer from './CharacterDataContainer';
 
 const StyledModalGroup = styled.div`
 #overlay {
@@ -76,6 +77,11 @@ export default class CharacterInfo extends Component {
                 <div><Link to={`/characters/${character.id}/edit`}><button>Edit</button></Link></div>
                 <button onClick={this.showFightModal}>Fight</button>
                 <button onClick={this.props.takeLongRest}>Long Rest</button>
+
+                <CharacterDataContainer
+                    getCharacter={this.props.getCharacter}
+                    character={character}
+                />
 
                 <StyledModalGroup>
                     <div id='modal' className={this.state.showFightModal ? '' : 'hidden'}>
