@@ -1,6 +1,18 @@
 import React, { Component } from 'react'
 import CharacterStatList from './CharacterStatList';
 import CharacterItemContainer from './CharacterItemContainer';
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+.form {
+  background-color: rgb(255,255,255);
+  border: 1px solid black;
+  textarea {
+    width: 300px;
+    height: 100px;
+  }
+}
+`
 
 export default class CharacterDataContainer extends Component {
   state = {
@@ -24,7 +36,7 @@ export default class CharacterDataContainer extends Component {
   render() {
     const character = this.props.character
     return (
-      <div>
+      <StyledDiv>
         <div className="selectors">
           <button onClick={this.showSkills}>Skills</button>
           <button onClick={this.showItems}>Inventory</button>
@@ -43,7 +55,7 @@ export default class CharacterDataContainer extends Component {
         /> : null}
 
         {this.state.showSpells ? 'spells' : null}
-      </div>
+      </StyledDiv>
     )
   }
 }

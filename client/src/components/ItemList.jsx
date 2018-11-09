@@ -55,7 +55,10 @@ export default class ItemList extends Component {
         let itemList = []
         if (this.state.items[0]) {
             itemList = this.state.items.map((item, i) => {
-                return <InfoItem key={i} item={item} />
+                return <InfoItem key={i} 
+                item={item}
+                getCharacter={this.props.getCharacter}
+                getItems={this.getItems} />
             })
         } else {
             itemList = 'This character does not have any items yet.'
@@ -64,12 +67,15 @@ export default class ItemList extends Component {
         return (
             <div>
                 {itemList}
-                <button onClick={this.showNewForm}>+</button>
+                <div>
+                    <button onClick={this.showNewForm}>+</button>
+                </div>
                 {this.state.showNewForm ?
-                    <div>
+                    <div className='form'>
                         <p>Add New Item</p>
                         <h5>Name</h5>
                         <input type='text'
+                            autoFocus
                             name='name'
                             value={this.state.newItem.name}
                             onChange={this.handleChange} />
