@@ -106,6 +106,10 @@ export default class EditAccountScreen extends Component {
         this.setState({ showDelete: !this.state.showDelete })
     }
 
+    hideDelete = () => {
+        this.setState({ showDelete: false })
+    }
+
     deleteAccount = async () => {
         await axios.delete(`/api/accounts/${this.props.match.params.id}`)
         this.setState({ redirect: true })
@@ -147,10 +151,10 @@ export default class EditAccountScreen extends Component {
                 <StyledOverlay>
                     <StyledModal className={this.state.showDelete ? '' : "hidden"}>
                         <p>Are you sure you want to delete this account?</p>
-                        <button onClick={this.showDelete}>Cancel</button>
+                        <button onClick={this.hideDelete}>Cancel</button>
                         <button id='delete' onClick={this.deleteAccount} >Delete Account</button>
                     </StyledModal>
-                    <div id='modal-overlay' onClick={this.showDelete} className={this.state.showDelete ? '' : 'hidden'}></div>
+                    <div id='modal-overlay' onClick={this.hideDelete} className={this.state.showDelete ? '' : 'hidden'}></div>
                 </StyledOverlay>
 
             </StyledDiv>

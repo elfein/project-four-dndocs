@@ -174,7 +174,11 @@ export default class EditCharacterScreen extends Component {
     }
 
     showDelete = () => {
-        this.setState({ showDelete: !this.state.showDelete })
+        this.setState({ showDelete: true })
+    }
+
+    hideDelete = () => {
+        this.setState({ showDelete: false })
     }
 
     deleteCharacter = async () => {
@@ -318,10 +322,10 @@ export default class EditCharacterScreen extends Component {
                 <StyledOverlay>
                     <StyledModal className={this.state.showDelete ? '' : "hidden"}>
                         <p>Are you sure you want to delete this character?</p>
-                        <button onClick={this.showDelete}>Cancel</button>
+                        <button onClick={this.hideDelete}>Cancel</button>
                         <button id='delete' onClick={this.deleteCharacter} >Delete Character</button>
                     </StyledModal>
-                    <div id='modal-overlay' onClick={this.showDelete} className={this.state.showDelete ? '' : 'hidden'}></div>
+                    <div id='modal-overlay' onClick={this.hideDelete} className={this.state.showDelete ? '' : 'hidden'}></div>
                 </StyledOverlay>
 
             </StyledDiv>
