@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import InfoItem from './InfoItem'
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+.hidden {
+  display: none;
+}
+`
 
 export default class ItemList extends Component {
     state = {
@@ -9,7 +16,8 @@ export default class ItemList extends Component {
             name: '',
             description: ''
         },
-        showNewForm: false
+        showNewForm: false,
+        nameError: false
     }
 
     getItems = async () => {
@@ -37,6 +45,7 @@ export default class ItemList extends Component {
 
     handleSubmit = async () => {
         if (this.state.newItem.name) {
+            this.setState({ nameError: false })
             await axios.post(`/api/characters/${this.props.character.id}/items`, this.state.newItem)
             await this.props.getCharacter()
             await this.getItems()
@@ -47,6 +56,8 @@ export default class ItemList extends Component {
                 }
             })
             this.hideNewForm()
+        } else if (!this.state.newItem.name) {
+            this.setState({ nameError: true })
         }
     }
 
@@ -55,17 +66,17 @@ export default class ItemList extends Component {
         let itemList = []
         if (this.state.items[0]) {
             itemList = this.state.items.map((item, i) => {
-                return <InfoItem key={i} 
-                item={item}
-                getCharacter={this.props.getCharacter}
-                getItems={this.getItems} />
+                return <InfoItem key={i}
+                    item={item}
+                    getCharacter={this.props.getCharacter}
+                    getItems={this.getItems} />
             })
         } else {
             itemList = 'This character does not have any items yet.'
         }
 
         return (
-            <div>
+            <StyledDiv>
                 {itemList}
                 <div>
                     <button onClick={this.showNewForm}>+</button>
@@ -79,6 +90,7 @@ export default class ItemList extends Component {
                             name='name'
                             value={this.state.newItem.name}
                             onChange={this.handleChange} />
+                        <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
                         <h5>Description</h5>
                         <input type='text'
@@ -92,7 +104,7 @@ export default class ItemList extends Component {
                         </div>
                     </div>
                     : null}
-            </div>
+            </StyledDiv>
         )
     }
 }

@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
+const StyledDiv = styled.div`
+.hidden {
+  display: none;
+}
+`
+
 const StyledModalGroup = styled.div`
 #overlay {
     z-index: 1000;
@@ -58,12 +64,15 @@ export default class WeaponInfoItem extends Component {
     updatedWeapon: {
       name: '',
       description: '',
-      damage_type: '',
+      damage_type: 'Bludgeoning',
       die_number: '',
-      die_type: '',
+      die_type: 4,
       prof: true,
-      bonus: 0
-    }
+      bonus: 0,
+      skill: 'str'
+    },
+    nameError: false,
+    numberError: false
   }
 
   setWeapon = () => {
@@ -109,17 +118,22 @@ export default class WeaponInfoItem extends Component {
       && this.state.updatedWeapon.die_number
       && this.state.updatedWeapon.die_type
       && this.state.updatedWeapon.damage_type) {
+      this.setState({ nameError: false, numberError: false })
       await axios.put(`/api/weapons/${this.props.weapon.id}`, this.state.updatedWeapon)
       await this.props.getCharacter()
       await this.props.getWeapons()
       this.hideEditForm()
+    } else if (!this.state.updatedWeapon.name) {
+      this.setState({ nameError: true })
+    } else if (!this.state.updatedWeapon.die_number) {
+      this.setState({ nameError: false, numberError: true })
     }
   }
 
   render() {
     const weapon = this.props.weapon
     return (
-      <div>
+      <StyledDiv>
         <h3>{weapon.name}</h3>
         <span onClick={this.showEditForm}>edit</span>
         <div className='weapon-data'>
@@ -135,6 +149,7 @@ export default class WeaponInfoItem extends Component {
               name='name'
               value={this.state.updatedWeapon.name}
               onChange={this.handleChange} />
+            <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
             <h5>Damage</h5>
             <input
@@ -165,6 +180,7 @@ export default class WeaponInfoItem extends Component {
               <option value='Radiant'>Radiant</option>
               <option value='Thunder'>Thunder</option>
             </select>
+            <h6 className={this.state.numberError ? '' : 'hidden'} >Must have at least one die.</h6>
 
             <h5>Skill</h5>
             <select name='skill' value={this.state.updatedWeapon.skill} onChange={this.handleChange}>
@@ -204,7 +220,7 @@ export default class WeaponInfoItem extends Component {
           </div>
           <div id='overlay' onClick={this.hideDelete} className={this.state.showDelete ? '' : 'hidden'} ></div>
         </StyledModalGroup>
-      </div>
+      </StyledDiv>
     )
   }
 }

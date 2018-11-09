@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import WeaponInfoItem from './WeaponInfoItem';
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+.hidden {
+  display: none;
+}
+`
 
 export default class WeaponList extends Component {
     state = {
@@ -8,11 +15,16 @@ export default class WeaponList extends Component {
         newWeapon: {
             name: '',
             description: '',
-            damage_type: '',
+            damage_type: 'Bludgeoning',
             die_number: '',
-            die_type: ''
+            die_type: 4,
+            skill: 'str',
+            prof: true,
+            bonus: 0
         },
-        showNewForm: false
+        showNewForm: false,
+        nameError: false,
+        numberError: false
     }
 
     getWeapons = async () => {
@@ -43,6 +55,7 @@ export default class WeaponList extends Component {
             && this.state.newWeapon.die_number
             && this.state.newWeapon.die_type
             && this.state.newWeapon.damage_type) {
+            this.setState({ nameError: false, numberError: false })
             await axios.post(`/api/characters/${this.props.character.id}/weapons`, this.state.newWeapon)
             await this.props.getCharacter()
             await this.getWeapons()
@@ -50,12 +63,19 @@ export default class WeaponList extends Component {
                 newWeapon: {
                     name: '',
                     description: '',
-                    damage_type: '',
+                    damage_type: 'Bludgeoning',
                     die_number: '',
-                    die_type: ''
+                    die_type: 4,
+                    skill: 'str',
+                    prof: true,
+                    bonus: 0
                 }
             })
             this.hideNewForm()
+        } else if (!this.state.newWeapon.name) {
+            this.setState({ nameError: true })
+        } else if (!this.state.newWeapon.die_number) {
+            this.setState({ nameError: false, numberError: true })
         }
     }
 
@@ -64,17 +84,17 @@ export default class WeaponList extends Component {
         let weaponList = []
         if (this.state.weapons[0]) {
             weaponList = this.state.weapons.map((weapon, i) => {
-                return <WeaponInfoItem key={i} 
-                weapon={weapon} 
-                getCharacter={this.props.getCharacter}
-                getWeapons={this.getWeapons} />
+                return <WeaponInfoItem key={i}
+                    weapon={weapon}
+                    getCharacter={this.props.getCharacter}
+                    getWeapons={this.getWeapons} />
             })
         } else {
             weaponList = 'This character does not have any weapons yet.'
         }
 
         return (
-            <div>
+            <StyledDiv>
                 {weaponList}
                 <div>
                     <button onClick={this.showNewForm}>+</button>
@@ -89,6 +109,7 @@ export default class WeaponList extends Component {
                             name='name'
                             value={this.state.newWeapon.name}
                             onChange={this.handleChange} />
+                        <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
                         <h5>Damage</h5>
                         <input
@@ -119,6 +140,7 @@ export default class WeaponList extends Component {
                             <option value='Radiant'>Radiant</option>
                             <option value='Thunder'>Thunder</option>
                         </select>
+                        <h6 className={this.state.numberError ? '' : 'hidden'} >Must have at least one die.</h6>
 
                         <h5>Skill</h5>
                         <select name='skill' onChange={this.handleChange}>
@@ -143,7 +165,7 @@ export default class WeaponList extends Component {
 
                     </div>
                     : null}
-            </div>
+            </StyledDiv>
         )
     }
 }

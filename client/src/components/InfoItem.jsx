@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
+const StyledDiv = styled.div`
+.hidden {
+  display: none;
+}
+`
+
 const StyledModalGroup = styled.div`
 #overlay {
     z-index: 1000;
@@ -58,7 +64,8 @@ export default class InfoItem extends Component {
     updatedItem: {
       name: '',
       description: ''
-    }
+    },
+    nameError: false
   }
 
   setItem = () => {
@@ -101,17 +108,20 @@ export default class InfoItem extends Component {
 
   handleSubmit = async () => {
     if (this.state.updatedItem.name) {
+      this.setState({ nameError: false })
       await axios.put(`/api/items/${this.props.item.id}`, this.state.updatedItem)
       await this.props.getCharacter()
       await this.props.getItems()
       this.hideEditForm()
+    } else if (!this.state.updatedItem.name) {
+      this.setState({ nameError: true })
     }
   }
 
   render() {
     const item = this.props.item
     return (
-      <div>
+      <StyledDiv>
         <h3>{item.name}</h3>
         <span onClick={this.showEditform}>edit</span>
         {this.state.showEditform ?
@@ -124,6 +134,7 @@ export default class InfoItem extends Component {
               name='name'
               value={this.state.updatedItem.name}
               onChange={this.handleChange} />
+              <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
             <h5>Description</h5>
             <textarea
@@ -145,7 +156,7 @@ export default class InfoItem extends Component {
           </div>
           : null}
 
-           <StyledModalGroup>
+        <StyledModalGroup>
           <div id='modal' className={this.state.showDelete ? '' : 'hidden'}>
             <p>Are you sure you want to delete this item?</p>
             <button onClick={this.hideDelete}>Cancel</button>
@@ -153,7 +164,7 @@ export default class InfoItem extends Component {
           </div>
           <div id='overlay' onClick={this.hideDelete} className={this.state.showDelete ? '' : 'hidden'} ></div>
         </StyledModalGroup>
-      </div>
+      </StyledDiv>
     )
   }
 }
