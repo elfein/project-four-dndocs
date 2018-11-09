@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import CharacterInfo from './CharacterInfo';
 import CharacterFight from './CharacterFight';
+import CharacterLog from './CharacterLog';
 
 const StyledDiv = styled.div`
 img {
@@ -26,6 +27,8 @@ export default class CharacterContainer extends Component {
     showLog: false,
     fightMode: false
   }
+
+  // --------------- Getting initial data for all screens ---------------
 
   setClassImg = () => {
     switch (this.state.character.class_name) {
@@ -81,6 +84,8 @@ export default class CharacterContainer extends Component {
     this.setClassImg()
   }
 
+  // --------------- Toggling between major tabs ---------------
+
   toggleInfo = () => {
     this.setState({ showInfo: true, showFight: false, showLog: false })
   }
@@ -89,6 +94,12 @@ export default class CharacterContainer extends Component {
     this.checkForFight()
     this.setState({ showInfo: false, showFight: true, showLog: false })
   }
+
+  toggleLog = () => {
+    this.setState({ showInfo: false, showFight: false, showLog: true })
+  }
+
+  // --------------- Encounter Creation ---------------
 
   startFight = async () => {
     const fight = await axios.post(`/api/characters/${this.props.match.params.id}/encounters`, { encounter_type: 'Fight' })
@@ -128,6 +139,8 @@ export default class CharacterContainer extends Component {
     }
   }
 
+  // --------------- End functions ---------------
+
   render() {
     const character = this.state.character
     return (
@@ -155,9 +168,15 @@ export default class CharacterContainer extends Component {
             fightMode={this.state.fightMode}
           /> : null}
 
+        {this.state.showLog ?
+          <CharacterLog
+            character={character}
+            classImg={this.state.classImg} />
+          : null}
+
         <button onClick={this.toggleInfo}>Info</button>
         <button onClick={this.toggleFight}>Fight</button>
-        <button>Log</button>
+        <button onClick={this.toggleLog}>Log</button>
       </StyledDiv>
     )
   }
