@@ -7,6 +7,21 @@ const StyledDiv = styled.div`
 .hidden {
     display: none;
 }
+
+.skill {
+    h6 {
+        margin: 4px 0 10px 0;
+    }
+    width: 110px;
+    input {
+        width: 100px;
+    }
+}
+
+.skill-group {
+    display: flex;
+    flex-wrap: wrap;
+}
 `
 
 const StyledOverlay = styled.div`
@@ -67,7 +82,13 @@ export default class EditCharacterScreen extends Component {
             class_name: '',
             max_hp: '',
             level: '',
-            prof: ''
+            prof: '',
+            str: 10,
+            dex: 10,
+            con: 10,
+            int: 10,
+            wis: 10,
+            cha: 10
         },
         redirect: false,
         nameError: false,
@@ -95,7 +116,13 @@ export default class EditCharacterScreen extends Component {
                     class_name: '',
                     max_hp: '',
                     level: '',
-                    prof: ''
+                    prof: '',
+                    str: 10,
+                    dex: 10,
+                    con: 10,
+                    int: 10,
+                    wis: 10,
+                    cha: 10
                 }
             })
             this.setState({ redirectId: response.data.id })
@@ -218,6 +245,64 @@ export default class EditCharacterScreen extends Component {
                         onChange={this.handleChange}
                     />
                     <h6 className={this.state.levelError ? '' : 'hidden'} >Level cannot be empty.</h6>
+
+                    <p>Skills</p>
+                    <div className='skill-group'>
+                        <div className='skill'>
+                            <input placeholder='Strength'
+                                type='number'
+                                name='str'
+                                value={this.state.updatedCharacter.str}
+                                onChange={this.handleChange}
+                            />
+                            <h6>Strength</h6>
+                        </div>
+                        <div className='skill'>
+                            <input placeholder='Dexterity'
+                                type='number'
+                                name='dex'
+                                value={this.state.updatedCharacter.dex}
+                                onChange={this.handleChange}
+                            />
+                            <h6>Dexterity</h6>
+                        </div>
+                        <div className='skill'>
+                            <input placeholder='Constitution'
+                                type='number'
+                                name='con'
+                                value={this.state.updatedCharacter.con}
+                                onChange={this.handleChange}
+                            />
+                            <h6>Constitution</h6>
+                        </div>
+                        <div className='skill'>
+                            <input placeholder='Intelligence'
+                                type='number'
+                                name='int'
+                                value={this.state.updatedCharacter.int}
+                                onChange={this.handleChange}
+                            />
+                            <h6>Intelligence</h6>
+                        </div>
+                        <div className='skill'>
+                            <input placeholder='Wisdom'
+                                type='number'
+                                name='wis'
+                                value={this.state.updatedCharacter.wis}
+                                onChange={this.handleChange}
+                            />
+                            <h6>Wisdom</h6>
+                        </div>
+                        <div className='skill'>
+                            <input placeholder='Charisma'
+                                type='number'
+                                name='cha'
+                                value={this.state.updatedCharacter.cha}
+                                onChange={this.handleChange}
+                            />
+                            <h6>Charisma</h6>
+                        </div>
+                    </div>
 
                     <div>
                         <input type='submit' value='Update' />
