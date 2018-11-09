@@ -7,9 +7,25 @@ import CharacterFight from './CharacterFight';
 import CharacterLog from './CharacterLog';
 
 const StyledDiv = styled.div`
+margin: 0 0 50px 0;
+
+footer {
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background-color: rgba(255,255,255,0.8);
+  button {
+    width: 30vw;
+  }
+}
+
 img {
     height: 50px;
 }
+
 `
 
 export default class CharacterContainer extends Component {
@@ -174,9 +190,11 @@ export default class CharacterContainer extends Component {
             classImg={this.state.classImg} />
           : null}
 
-        <button onClick={this.toggleInfo}>Info</button>
-        <button onClick={this.toggleFight}>Fight</button>
-        <button onClick={this.toggleLog}>Log</button>
+        <footer>
+          <button onClick={this.toggleInfo}>Info</button>
+          <button onClick={this.toggleFight}>Fight</button>
+          <button onClick={this.toggleLog}>Log</button>
+        </footer>
       </StyledDiv>
     )
   }
