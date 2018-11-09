@@ -42,6 +42,18 @@ export default class WeaponList extends Component {
 
     hideNewForm = () => {
         this.setState({ showNewForm: false })
+        this.setState({
+            newWeapon: {
+                name: '',
+                description: '',
+                damage_type: 'Bludgeoning',
+                die_number: '',
+                die_type: 4,
+                skill: 'str',
+                prof: true,
+                bonus: 0
+            }
+        })
     }
 
     handleChange = (event) => {
@@ -59,18 +71,6 @@ export default class WeaponList extends Component {
             await axios.post(`/api/characters/${this.props.character.id}/weapons`, this.state.newWeapon)
             await this.props.getCharacter()
             await this.getWeapons()
-            this.setState({
-                newWeapon: {
-                    name: '',
-                    description: '',
-                    damage_type: 'Bludgeoning',
-                    die_number: '',
-                    die_type: 4,
-                    skill: 'str',
-                    prof: true,
-                    bonus: 0
-                }
-            })
             this.hideNewForm()
         } else if (!this.state.newWeapon.name) {
             this.setState({ nameError: true })

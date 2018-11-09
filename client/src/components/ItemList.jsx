@@ -35,6 +35,12 @@ export default class ItemList extends Component {
 
     hideNewForm = () => {
         this.setState({ showNewForm: false })
+        this.setState({
+            newItem: {
+                name: '',
+                description: ''
+            }
+        })
     }
 
     handleChange = (event) => {
@@ -49,12 +55,6 @@ export default class ItemList extends Component {
             await axios.post(`/api/characters/${this.props.character.id}/items`, this.state.newItem)
             await this.props.getCharacter()
             await this.getItems()
-            this.setState({
-                newItem: {
-                    name: '',
-                    description: ''
-                }
-            })
             this.hideNewForm()
         } else if (!this.state.newItem.name) {
             this.setState({ nameError: true })
