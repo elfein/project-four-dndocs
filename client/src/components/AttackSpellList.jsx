@@ -58,20 +58,31 @@ export default class AttackSpellList extends Component {
 
     nameSearch = (string) => {
         if (string) {
-        const possibleSpells = this.props.apiSpells.filter((spell) => {
-            return spell['name'].toLowerCase().includes(string.toLowerCase())
-        })
-        this.setState({ possibleSpells })
-    } else {
-        this.setState({ possibleSpells: [] })
+            const possibleSpells = this.props.apiSpells.filter((spell) => {
+                return spell['name'].toLowerCase().includes(string.toLowerCase())
+            })
+            this.setState({ possibleSpells })
+        } else {
+            this.setState({ possibleSpells: [] })
+        }
     }
-    }
-    
+
     fillSpell = async (name) => {
         const apiSpellUrl = await axios.get(`http://www.dnd5eapi.co/api/spells/?name=${name}`)
-        console.log(apiSpellUrl.data.results[0]['url'])
-        const apiSpell = await axios.get(apiSpellUrl.data.results[0]['url'])
-        console.log(apiSpell.data)
+        const apiSpellData = await axios.get(apiSpellUrl.data.results[0]['url'])
+        const apiSpell = apiSpellData.data
+        const newAttackSpell = {
+            name: apiSpell['name'],
+            description: apiSpell['desc'][0],
+            damage_type: 'Acid',
+            die_number: '',
+            die_type: 4,
+            skill: 'wis',
+            prof: true,
+            bonus: 0,
+            attack: true
+        }
+        this.setState({ newAttackSpell, possibleSpells: [] })
     }
 
     handleChange = (event) => {
@@ -80,8 +91,8 @@ export default class AttackSpellList extends Component {
         this.setState({ newAttackSpell })
         if (event.target.name === 'name') {
             this.nameSearch(event.target.value)
-        }    
-    }    
+        }
+    }
 
 
 
@@ -119,9 +130,10 @@ export default class AttackSpellList extends Component {
         let possibleSpellNames = []
         if (this.state.possibleSpells[0]) {
             possibleSpellNames = this.state.possibleSpells.map((spell, i) => {
-                if (i < 6) {
-                return <li className='search-result' onClick={() => this.fillSpell(spell['name'])} key={i}>{spell['name']}</li>
-                }
+                    return <li className='search-result' 
+                    onClick={() => this.fillSpell(spell['name'])} 
+                    key={i}>{spell['name']}
+                    </li>        
             })
         }
 
@@ -142,7 +154,7 @@ export default class AttackSpellList extends Component {
                             value={this.state.newAttackSpell.name}
                             onChange={this.handleChange}
                             autoComplete='off' />
-                        {this.state.possibleSpells[0] ? <div id='results'>{possibleSpellNames}</div> : null}
+                        {this.state.possibleSpells[0] ? <div id='results'>{possibleSpellNames.slice(0, 5)}</div> : null}
                         <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
                         <h5>Damage</h5>
@@ -187,7 +199,7 @@ export default class AttackSpellList extends Component {
                         </select>
 
                         <h5>Description</h5>
-                        <input type='text'
+                        <textarea
                             name='description'
                             value={this.state.newAttackSpell.description}
                             onChange={this.handleChange} />

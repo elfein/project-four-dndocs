@@ -7,10 +7,17 @@ const StyledDiv = styled.div`
 .hidden {
   display: none;
 }
+#results {
+    background-color: rgb(255,255,255);
+    border: 1px solid rgba(0,0,0,0.5);
+    width: 90%;
+    margin: 0 auto;
+}
 `
 
 export default class OtherSpellList extends Component {
     state = {
+        possibleSpells: [],
         newSpell: {
             name: '',
             description: '',
@@ -33,14 +40,43 @@ export default class OtherSpellList extends Component {
                 description: '',
                 prof: true,
                 attack: false
-            }
+            },
+            possibleSpells: []
         })
     }
+
+    nameSearch = (string) => {
+        if (string) {
+            const possibleSpells = this.props.apiSpells.filter((spell) => {
+                return spell['name'].toLowerCase().includes(string.toLowerCase())
+            })
+            this.setState({ possibleSpells })
+        } else {
+            this.setState({ possibleSpells: [] })
+        }
+    }
+
+    fillSpell = async (name) => {
+        const apiSpellUrl = await axios.get(`http://www.dnd5eapi.co/api/spells/?name=${name}`)
+        const apiSpellData = await axios.get(apiSpellUrl.data.results[0]['url'])
+        const apiSpell = apiSpellData.data
+        const newSpell = {
+            name: apiSpell['name'],
+            description: apiSpell['desc'][0],
+            prof: true,
+            attack: false
+        }
+        this.setState({ newSpell, possibleSpells: [] })
+    }
+
 
     handleChange = (event) => {
         const newSpell = { ...this.state.newSpell }
         newSpell[event.target.name] = event.target.value
         this.setState({ newSpell })
+        if (event.target.name === 'name') {
+            this.nameSearch(event.target.value)
+        }
     }
 
     handleSubmit = async () => {
@@ -69,6 +105,13 @@ export default class OtherSpellList extends Component {
             otherSpellList = 'No spells.'
         }
 
+        let possibleSpellNames = []
+        if (this.state.possibleSpells[0]) {
+            possibleSpellNames = this.state.possibleSpells.map((spell, i) => {
+                    return <li className='search-result' onClick={() => this.fillSpell(spell['name'])} key={i}>{spell['name']}</li>
+            })
+        }
+
         return (
             <StyledDiv>
                 {otherSpellList}
@@ -84,11 +127,13 @@ export default class OtherSpellList extends Component {
                             autoFocus
                             name='name'
                             value={this.state.newSpell.name}
-                            onChange={this.handleChange} />
+                            onChange={this.handleChange}
+                            autoComplete='off' />
+                        {this.state.possibleSpells[0] ? <div id='results'>{possibleSpellNames.slice(0, 5)}</div> : null}
                         <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
                         <h5>Description</h5>
-                        <input type='text'
+                        <textarea
                             name='description'
                             value={this.state.newSpell.description}
                             onChange={this.handleChange} />
