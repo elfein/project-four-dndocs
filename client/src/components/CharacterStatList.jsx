@@ -18,7 +18,10 @@ export default class CharacterStatList extends Component {
        let statlist = []
       if (stats[0]) {
         statlist = stats.map((stat, i) => {
-            return <StatItem key={i} stat={stat} character={character} getCharacter={this.props.getCharacter} />
+            return <StatItem key={i} 
+            stat={stat} 
+            character={character} 
+            getCharacter={this.props.getCharacter} />
         })
         }
     return (

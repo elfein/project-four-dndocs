@@ -43,10 +43,10 @@ export default class StatItem extends Component {
 
     endForm = async (event) => {
         if (event.target.value) {
-            const character = {...this.state.character}
-            character[this.state.stat[0].toLowerCase()] = parseInt(this.state.stat[1])
+            const character = {...this.props.character}
+            character[this.state.stat[0].toLowerCase()] = event.target.value
             await axios.put(`/api/characters/${this.state.character.id}`, character)
-            this.props.getCharacter()
+            await this.props.getCharacter()
         } else {
             this.state.stat[1] = 10
         }
@@ -66,7 +66,8 @@ export default class StatItem extends Component {
     render() {
         return (
             <StyledDiv onClick={this.showForm}>
-                {this.state.showForm ? <input type='number' autoFocus onBlur={this.endForm} value={this.state.stat[1]} onChange={this.handleChange} /> : this.state.stat[1]}
+                {this.state.showForm ? <input type='number' autoFocus onBlur={this.endForm} value={this.state.stat[1]} onChange={this.handleChange} /> 
+                : this.state.stat[1]}
                 <h6>{this.state.stat[0]}</h6>
             </StyledDiv>
         )

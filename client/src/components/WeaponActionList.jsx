@@ -30,7 +30,7 @@ export default class WeaponActionList extends Component {
                 encounter={this.props.encounter} />
             })
         } else {
-            weaponList = 'This character does not have any weapons yet.'
+            weaponList = 'No weapons yet.'
         }
 
         return (
