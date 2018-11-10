@@ -1,39 +1,37 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import WeaponInfoItem from './WeaponInfoItem';
 import styled from 'styled-components'
+import AttackSpellItem from './AttackSpellItem';
 
 const StyledDiv = styled.div`
 .hidden {
   display: none;
 }
+#results {
+    background-color: rgb(255,255,255);
+    border: 1px solid rgba(0,0,0,0.5);
+    width: 90%;
+    margin: 0 auto;
+}
 `
 
-export default class WeaponList extends Component {
+export default class AttackSpellList extends Component {
     state = {
-        weapons: [],
-        newWeapon: {
+        possibleSpells: [],
+        newAttackSpell: {
             name: '',
             description: '',
-            damage_type: 'Bludgeoning',
+            damage_type: 'Acid',
             die_number: '',
             die_type: 4,
-            skill: 'str',
+            skill: 'wis',
             prof: true,
-            bonus: 0
+            bonus: 0,
+            attack: true
         },
         showNewForm: false,
         nameError: false,
         numberError: false
-    }
-
-    getWeapons = async () => {
-        const response = await axios.get(`/api/characters/${this.props.character.id}/weapons`)
-        this.setState({ weapons: response.data })
-    }
-
-    componentDidMount = () => {
-        this.getWeapons()
     }
 
     showNewForm = () => {
@@ -43,72 +41,108 @@ export default class WeaponList extends Component {
     hideNewForm = () => {
         this.setState({ showNewForm: false })
         this.setState({
-            newWeapon: {
+            newAttackSpell: {
                 name: '',
                 description: '',
-                damage_type: 'Bludgeoning',
+                damage_type: 'Acid',
                 die_number: '',
                 die_type: 4,
-                skill: 'str',
+                skill: 'wis',
                 prof: true,
-                bonus: 0
-            }
+                bonus: 0,
+                attack: true
+            },
+            possibleSpells: []
         })
     }
 
-    handleChange = (event) => {
-        const newWeapon = { ...this.state.newWeapon }
-        newWeapon[event.target.name] = event.target.value
-        this.setState({ newWeapon })
+    nameSearch = (string) => {
+        if (string) {
+        const possibleSpells = this.props.apiSpells.filter((spell) => {
+            return spell['name'].toLowerCase().includes(string.toLowerCase())
+        })
+        this.setState({ possibleSpells })
+    } else {
+        this.setState({ possibleSpells: [] })
+    }
+    }
+    
+    fillSpell = async (name) => {
+        const apiSpellUrl = await axios.get(`http://www.dnd5eapi.co/api/spells/?name=${name}`)
+        console.log(apiSpellUrl.data.results[0]['url'])
+        const apiSpell = await axios.get(apiSpellUrl.data.results[0]['url'])
+        console.log(apiSpell.data)
     }
 
+    handleChange = (event) => {
+        const newAttackSpell = { ...this.state.newAttackSpell }
+        newAttackSpell[event.target.name] = event.target.value
+        this.setState({ newAttackSpell })
+        if (event.target.name === 'name') {
+            this.nameSearch(event.target.value)
+        }    
+    }    
+
+
+
     handleSubmit = async () => {
-        if (this.state.newWeapon.name
-            && this.state.newWeapon.die_number
-            && this.state.newWeapon.die_type
-            && this.state.newWeapon.damage_type) {
+        if (this.state.newAttackSpell.name
+            && this.state.newAttackSpell.die_number
+            && this.state.newAttackSpell.die_type
+            && this.state.newAttackSpell.damage_type) {
             this.setState({ nameError: false, numberError: false })
-            await axios.post(`/api/characters/${this.props.character.id}/weapons`, this.state.newWeapon)
+            await axios.post(`/api/characters/${this.props.character.id}/spells`, this.state.newAttackSpell)
             await this.props.getCharacter()
-            await this.getWeapons()
+            await this.props.setSpells()
             this.hideNewForm()
-        } else if (!this.state.newWeapon.name) {
+        } else if (!this.state.newAttackSpell.name) {
             this.setState({ nameError: true })
-        } else if (!this.state.newWeapon.die_number) {
+        } else if (!this.state.newAttackSpell.die_number) {
             this.setState({ nameError: false, numberError: true })
         }
     }
 
     render() {
 
-        let weaponList = []
-        if (this.state.weapons[0]) {
-            weaponList = this.state.weapons.map((weapon, i) => {
-                return <WeaponInfoItem key={i}
-                    weapon={weapon}
+        let attackSpellList = []
+        if (this.props.attackSpells[0]) {
+            attackSpellList = this.props.attackSpells.map((spell, i) => {
+                return <AttackSpellItem key={i}
+                    spell={spell}
                     getCharacter={this.props.getCharacter}
-                    getWeapons={this.getWeapons} />
+                    setSpells={this.props.setSpells} />
             })
         } else {
-            weaponList = 'No weapons yet!'
+            attackSpellList = 'No spells.'
+        }
+
+        let possibleSpellNames = []
+        if (this.state.possibleSpells[0]) {
+            possibleSpellNames = this.state.possibleSpells.map((spell, i) => {
+                if (i < 6) {
+                return <li className='search-result' onClick={() => this.fillSpell(spell['name'])} key={i}>{spell['name']}</li>
+                }
+            })
         }
 
         return (
             <StyledDiv>
-                {weaponList}
+                {attackSpellList}
                 <div>
                     <button onClick={this.showNewForm}>+</button>
                 </div>
                 {this.state.showNewForm ?
                     <div className='form'>
-                        <p>Add New Weapon</p>
+                        <p>Add New Attack Spell</p>
 
                         <h5>Name</h5>
                         <input type='text'
                             autoFocus
                             name='name'
-                            value={this.state.newWeapon.name}
-                            onChange={this.handleChange} />
+                            value={this.state.newAttackSpell.name}
+                            onChange={this.handleChange}
+                            autoComplete='off' />
+                        {this.state.possibleSpells[0] ? <div id='results'>{possibleSpellNames}</div> : null}
                         <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
                         <h5>Damage</h5>
@@ -116,7 +150,7 @@ export default class WeaponList extends Component {
                             placeholder='# of dice'
                             type='number'
                             name='die_number'
-                            value={this.state.newWeapon.die_number}
+                            value={this.state.newAttackSpell.die_number}
                             onChange={this.handleChange} />
                         <select name='die_type' onChange={this.handleChange}>
                             <option value={4} >d4</option>
@@ -126,9 +160,6 @@ export default class WeaponList extends Component {
                             <option value={12} >d12</option>
                         </select>
                         <select name='damage_type' onChange={this.handleChange}>
-                            <option value='Bludgeoning'>Bludgeoning</option>
-                            <option value='Piercing'>Piercing</option>
-                            <option value='Slashing'>Slashing</option>
                             <option value='Acid'>Acid</option>
                             <option value='Cold'>Cold</option>
                             <option value='Fire'>Fire</option>
@@ -139,28 +170,31 @@ export default class WeaponList extends Component {
                             <option value='Psychic'>Psychic</option>
                             <option value='Radiant'>Radiant</option>
                             <option value='Thunder'>Thunder</option>
+                            <option value='Bludgeoning'>Bludgeoning</option>
+                            <option value='Piercing'>Piercing</option>
+                            <option value='Slashing'>Slashing</option>
                         </select>
                         <h6 className={this.state.numberError ? '' : 'hidden'} >Must have at least one die.</h6>
 
                         <h5>Skill</h5>
                         <select name='skill' onChange={this.handleChange}>
+                            <option value='wis'>WIS</option>
+                            <option value='int'>INT</option>
+                            <option value='cha'>CHA</option>
                             <option value='str'>STR</option>
                             <option value='dex'>DEX</option>
                             <option value='con'>CON</option>
-                            <option value='int'>INT</option>
-                            <option value='wis'>WIS</option>
-                            <option value='cha'>CHA</option>
                         </select>
 
                         <h5>Description</h5>
                         <input type='text'
                             name='description'
-                            value={this.state.newWeapon.description}
+                            value={this.state.newAttackSpell.description}
                             onChange={this.handleChange} />
 
                         <div>
                             <button onClick={this.hideNewForm}>Cancel</button>
-                            <button onClick={this.handleSubmit}>Add Weapon</button>
+                            <button onClick={this.handleSubmit}>Add Spell</button>
                         </div>
 
                     </div>

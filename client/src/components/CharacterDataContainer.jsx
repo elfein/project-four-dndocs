@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CharacterStatList from './CharacterStatList';
 import CharacterItemContainer from './CharacterItemContainer';
 import styled from 'styled-components'
+import CharacterSpellContainer from './CharacterSpellContainer';
 
 const StyledDiv = styled.div`
 .form {
@@ -54,7 +55,12 @@ export default class CharacterDataContainer extends Component {
             character={character}
           /> : null}
 
-        {this.state.showSpells ? 'spells' : null}
+        {this.state.showSpells ?
+          <CharacterSpellContainer
+            getCharacter={this.props.getCharacter}
+            character={character}
+          /> : null}
+
       </StyledDiv>
     )
   }

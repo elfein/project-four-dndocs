@@ -23,6 +23,7 @@ vm = sylfare.spells.create(name: 'Vicious Mockery', attack: true, prof: true, co
 
 This spell\'s damage increases by 1d4 when you reach 5th level (2d4), 11th level (3d4), and 17th level (4d4).', skill: '')
 thunder = sylfare.spells.create(name: 'Thunderwave', attack: true, prof: true, components: 'V,S', casting_time: '1 Action', duration: 'Instantaneous', die_number: 2, die_type: 8, bonus: 0, damage_type: 'Thunder', description: 'A wave of thunderous force sweeps out from you. Each creature in a 15-foot cube originating from you must make a Constitution saving throw. On a failed save, a creature takes 2d8 thunder damage and is pushed 10 feet away from you. On a successful save, the creature takes half as much damage and isn\'t pushed.')
+mi = sylfare.spells.create(name: 'Minor Illusion', attack: false, prof: true, components: 'V,S,M', casting_time: '1 Action', duration: '10 minutes', description: 'A visual illusion appears in an area the caster can see. A creature can roll an investigation check against the caster\'s spell save DC to determine the integrity of the illusion.')
 
 pk = riley.items.create(name: 'Painter\'s Kit', description: 'A simple set of paints and brushes.')
 whet = riley.items.create(name: 'Whetstone', description: 'A tool for sharpening metal weapons.')

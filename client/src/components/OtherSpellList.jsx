@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import InfoItem from './InfoItem'
 import styled from 'styled-components'
+import OtherSpellItem from './OtherSpellItem';
 
 const StyledDiv = styled.div`
 .hidden {
@@ -9,24 +9,16 @@ const StyledDiv = styled.div`
 }
 `
 
-export default class ItemList extends Component {
+export default class OtherSpellList extends Component {
     state = {
-        items: [],
-        newItem: {
+        newSpell: {
             name: '',
-            description: ''
+            description: '',
+            prof: true,
+            attack: false
         },
         showNewForm: false,
         nameError: false
-    }
-
-    getItems = async () => {
-        const response = await axios.get(`/api/characters/${this.props.character.id}/items`)
-        this.setState({ items: response.data })
-    }
-
-    componentDidMount = () => {
-        this.getItems()
     }
 
     showNewForm = () => {
@@ -36,72 +28,76 @@ export default class ItemList extends Component {
     hideNewForm = () => {
         this.setState({ showNewForm: false })
         this.setState({
-            newItem: {
+            newSpell: {
                 name: '',
-                description: ''
+                description: '',
+                prof: true,
+                attack: false
             }
         })
     }
 
     handleChange = (event) => {
-        const newItem = { ...this.state.newItem }
-        newItem[event.target.name] = event.target.value
-        this.setState({ newItem })
+        const newSpell = { ...this.state.newSpell }
+        newSpell[event.target.name] = event.target.value
+        this.setState({ newSpell })
     }
 
     handleSubmit = async () => {
-        if (this.state.newItem.name) {
+        if (this.state.newSpell.name) {
             this.setState({ nameError: false })
-            await axios.post(`/api/characters/${this.props.character.id}/items`, this.state.newItem)
+            await axios.post(`/api/characters/${this.props.character.id}/spells`, this.state.newSpell)
             await this.props.getCharacter()
-            await this.getItems()
+            await this.props.setSpells()
             this.hideNewForm()
-        } else if (!this.state.newItem.name) {
+        } else if (!this.state.newSpell.name) {
             this.setState({ nameError: true })
         }
     }
 
     render() {
 
-        let itemList = []
-        if (this.state.items[0]) {
-            itemList = this.state.items.map((item, i) => {
-                return <InfoItem key={i}
-                    item={item}
+        let otherSpellList = []
+        if (this.props.otherSpells[0]) {
+            otherSpellList = this.props.otherSpells.map((spell, i) => {
+                return <OtherSpellItem key={i}
+                    spell={spell}
                     getCharacter={this.props.getCharacter}
-                    getItems={this.getItems} />
+                    setSpells={this.props.setSpells} />
             })
         } else {
-            itemList = 'No items yet.'
+            otherSpellList = 'No spells.'
         }
 
         return (
             <StyledDiv>
-                {itemList}
+                {otherSpellList}
                 <div>
                     <button onClick={this.showNewForm}>+</button>
                 </div>
                 {this.state.showNewForm ?
                     <div className='form'>
-                        <p>Add New Item</p>
+                        <p>Add New Spell</p>
+
                         <h5>Name</h5>
                         <input type='text'
                             autoFocus
                             name='name'
-                            value={this.state.newItem.name}
+                            value={this.state.newSpell.name}
                             onChange={this.handleChange} />
                         <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
                         <h5>Description</h5>
                         <input type='text'
                             name='description'
-                            value={this.state.newItem.description}
+                            value={this.state.newSpell.description}
                             onChange={this.handleChange} />
 
                         <div>
                             <button onClick={this.hideNewForm}>Cancel</button>
-                            <button onClick={this.handleSubmit}>Add Item</button>
+                            <button onClick={this.handleSubmit}>Add Spell</button>
                         </div>
+
                     </div>
                     : null}
             </StyledDiv>
