@@ -18,14 +18,6 @@ input {
 export default class StatItem extends Component {
     state = {
         stat: ['', ''],
-        character: {
-            str: '',
-            dex: '',
-            wis: '',
-            cha: '',
-            int: '',
-            con: ''
-        },
         showForm: false
     }
 
@@ -34,7 +26,7 @@ export default class StatItem extends Component {
         if (!stat[1]) {
             stat[1] = 10
         }
-        this.setState({ stat, character: this.props.character })
+        this.setState({ stat })
     }
 
     showForm = () => {
@@ -45,7 +37,7 @@ export default class StatItem extends Component {
         if (event.target.value) {
             const character = {...this.props.character}
             character[this.state.stat[0].toLowerCase()] = event.target.value
-            await axios.put(`/api/characters/${this.state.character.id}`, character)
+            await axios.put(`/api/characters/${this.props.character.id}`, character)
             await this.props.getCharacter()
         } else {
             this.state.stat[1] = 10
