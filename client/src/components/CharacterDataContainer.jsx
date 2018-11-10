@@ -48,11 +48,11 @@ export default class CharacterDataContainer extends Component {
             getCharacter={this.props.getCharacter}
             character={character} /> : null}
 
-        {this.state.showItems ? 
-        <CharacterItemContainer
-        getCharacter={this.props.getCharacter}
-        character={character}
-        /> : null}
+        {this.state.showItems ?
+          <CharacterItemContainer
+            getCharacter={this.props.getCharacter}
+            character={character}
+          /> : null}
 
         {this.state.showSpells ? 'spells' : null}
       </StyledDiv>

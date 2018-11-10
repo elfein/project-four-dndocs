@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import ActionsContainer from './ActionsContainer';
 
 const StyledModalGroup = styled.div`
 text-align: center;
@@ -264,6 +265,11 @@ export default class CharacterFight extends Component {
                     <button onClick={this.showHealModal}>Heal</button>
                     <button onClick={this.showHitModal}>Take Hit</button>
                 </div>
+
+                <ActionsContainer 
+                encounter={this.props.encounter}
+                character={character}
+                getCharacter={this.props.getCharacter} />
 
                 {/* ---------------- End Fight Modal ---------------- */}
                 <StyledModalGroup>
