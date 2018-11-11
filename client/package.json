@@ -5,6 +5,8 @@
   "proxy": "http://localhost:3001",
   "dependencies": {
     "axios": "^0.18.0",
+    "d3": "^5.7.0",
+    "radar-chart-d3": "^1.2.0",
     "react": "^16.6.0",
     "react-d3-radar": "^1.0.0-rc4",
     "react-dom": "^16.6.0",

@@ -1,48 +1,24 @@
 import React, { Component } from 'react'
+// import RadarStatChart from './RadarStatChart';
 import Radar from 'react-d3-radar'
-
+import HealthChart from './HealthChart';
 
 export default class CharacterLog extends Component {
 
-    // // static propTypes = { ...this.props.character }
-
-    // componentDidMount() {
-    //     const character = this.props.character
-    //     const d = [
-    //         [
-    //             { axis: "STR", value: character.str },
-    //             { axis: "DEX", value: character.dex },
-    //             { axis: "CON", value: character.con }
-    //         ]
-    //     ]
-
-    //     RadarChart.draw("#chart", d)
-    // }
-
-    // shouldComponentUpdate() {
-    //     // Prevents component re-rendering
-    //     return false
-    // }
-
-    // _setRef(componentNode) {
-    //     this._rootNode = componentNode
-    // }
-
     render() {
         const character = this.props.character
-        //     // [character.str, character.dex, character.con, character.int, character.wis, character.cha]
-
-        //     RadarChart.draw("#chart", d)
-
         return (
             <div>
                 <img src={this.props.classImg} alt='classpic' />
                 <div>
                     <h3>{character.race} {character.class_name}</h3>
                 </div>
+                {/* <RadarStatChart 
+                character={character}
+                /> */}
                 <Radar
-                    width={400}
-                    height={400}
+                    width={300}
+                    height={300}
                     padding={50}
                     domainMax={20}
                     data={{
@@ -59,18 +35,21 @@ export default class CharacterLog extends Component {
                                 key: this.props.character.name,
                                 label: 'Skills',
                                 values: {
-                                    str: this.props.character.str,
-                                    dex: this.props.character.dex,
-                                    con: this.props.character.con,
-                                    int: this.props.character.int,
-                                    wis: this.props.character.wis,
-                                    cha: this.props.character.cha
+                                    str: character.str,
+                                    dex: character.dex,
+                                    con: character.con,
+                                    int: character.int,
+                                    wis: character.wis,
+                                    cha: character.cha
                                 }
                             }
                         ]
                     }}
                 />
                 <div id='chart'></div>
+                <HealthChart 
+                character={this.props.character}
+                />
             </div>
         )
     }
