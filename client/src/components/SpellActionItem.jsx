@@ -54,7 +54,8 @@ width: 300px;
 export default class SpellActionItem extends Component {
     state = {
         diff: '',
-        damage_type: ''
+        damage_type: '',
+        showAttack: false
     }
 
     showAttack = () => {
