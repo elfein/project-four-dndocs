@@ -58,7 +58,7 @@ export default class OtherSpellList extends Component {
 
     fillSpell = async (name) => {
         const apiSpellUrl = await axios.get(`https://cors-everywhere.herokuapp.com/http://www.dnd5eapi.co/api/spells/?name=${name}`)
-        const apiSpellData = await axios.get(apiSpellUrl.data.results[0]['url'])
+        const apiSpellData = await axios.get('https://cors-everywhere.herokuapp.com/' + apiSpellUrl.data.results[0]['url'])
         const apiSpell = apiSpellData.data
         const newSpell = {
             name: apiSpell['name'],
