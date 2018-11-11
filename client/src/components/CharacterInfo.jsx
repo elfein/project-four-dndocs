@@ -71,6 +71,7 @@ export default class CharacterInfo extends Component {
             <div>
                 <img src={this.props.classImg} alt='classpic' />
                 <div>
+                    <h3>Level {character.level}</h3>
                     <h3>{character.race} {character.class_name}</h3>
                     <span><h1>HP: {character.current_hp}</h1> / {character.max_hp} </span>
                 </div>

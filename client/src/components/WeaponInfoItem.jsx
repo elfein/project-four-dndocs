@@ -59,6 +59,7 @@ width: 300px;
 
 export default class WeaponInfoItem extends Component {
   state = {
+    showMore: false,
     showEditForm: false,
     showDelete: false,
     updatedWeapon: {
@@ -130,14 +131,21 @@ export default class WeaponInfoItem extends Component {
     }
   }
 
+  toggleMore = () => {
+    this.setState({ showMore: !this.state.showMore })
+  }
+
   render() {
     const weapon = this.props.weapon
     return (
       <StyledDiv>
-        <h3>{weapon.name}</h3>
-        <span onClick={this.showEditForm}>edit</span>
-        <div className='weapon-data'>
-          <h4>{weapon.die_number}d{weapon.die_type} {weapon.damage_type}</h4>
+        <div onClick={this.toggleMore}>
+          <h3>{weapon.name}</h3>
+          <span onClick={this.showEditForm}>edit</span>
+          <div className='weapon-data'>
+            <h4>{weapon.die_number}d{weapon.die_type} {weapon.damage_type}</h4>
+          </div>
+          <h6>{weapon.description.length < 40 || this.state.showMore ? weapon.description : weapon.description.slice(0, 40) + '...'}</h6>
         </div>
         {this.state.showEditForm ?
           <div className='form'>

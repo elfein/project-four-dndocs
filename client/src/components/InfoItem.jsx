@@ -59,6 +59,7 @@ width: 300px;
 
 export default class InfoItem extends Component {
   state = {
+    showMore: false,
     showEditform: false,
     showDelete: false,
     updatedItem: {
@@ -118,12 +119,19 @@ export default class InfoItem extends Component {
     }
   }
 
+  toggleMore = () => {
+    this.setState({ showMore: !this.state.showMore })
+  }
+
   render() {
     const item = this.props.item
     return (
       <StyledDiv>
-        <h3>{item.name}</h3>
-        <span onClick={this.showEditform}>edit</span>
+        <div onClick={this.toggleMore}>
+          <h3>{item.name}</h3>
+          <span onClick={this.showEditform}>edit</span>
+          <h6>{item.description.length < 40 || this.state.showMore ? item.description : item.description.slice(0, 40) + '...'}</h6>
+        </div>
         {this.state.showEditform ?
           <div className='form'>
             <p>Edit {item.name}</p>
@@ -134,7 +142,7 @@ export default class InfoItem extends Component {
               name='name'
               value={this.state.updatedItem.name}
               onChange={this.handleChange} />
-              <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
+            <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
             <h5>Description</h5>
             <textarea

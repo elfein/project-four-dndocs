@@ -59,6 +59,7 @@ width: 300px;
 
 export default class OtherSpellItem extends Component {
     state = {
+        showMore: false,
         showEditForm: false,
         showDelete: false,
         updatedSpell: {
@@ -120,12 +121,19 @@ export default class OtherSpellItem extends Component {
         }
     }
 
+    toggleMore = () => {
+        this.setState({ showMore: !this.state.showMore })
+    }
+
     render() {
         const spell = this.props.spell
         return (
-<StyledDiv>
-                <h3>{spell.name}</h3>
-                <span onClick={this.showEditForm}>edit</span>
+            <StyledDiv>
+                <div onClick={this.toggleMore}>
+                    <h3>{spell.name}</h3>
+                    <span onClick={this.showEditForm}>edit</span>
+                    <h6>{spell.description.length < 40 || this.state.showMore ? spell.description : spell.description.slice(0, 40) + '...'}</h6>
+                </div>
                 {this.state.showEditForm ?
                     <div className='form'>
                         <p>Edit {spell.name}</p>

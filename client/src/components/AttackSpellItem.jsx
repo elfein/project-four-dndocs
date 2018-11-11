@@ -59,6 +59,7 @@ width: 300px;
 
 export default class AttackSpellItem extends Component {
     state = {
+        showMore: false,
         showEditForm: false,
         showDelete: false,
         updatedSpell: {
@@ -131,14 +132,21 @@ export default class AttackSpellItem extends Component {
         }
     }
 
+    toggleMore = () => {
+        this.setState({ showMore: !this.state.showMore })
+    }
+
     render() {
         const spell = this.props.spell
         return (
             <StyledDiv>
-                <h3>{spell.name}</h3>
-                <span onClick={this.showEditForm}>edit</span>
-                <div className='spell-data'>
-                    <h4>{spell.die_number}d{spell.die_type} {spell.damage_type}</h4>
+                <div onClick={this.toggleMore}>
+                    <h3>{spell.name}</h3>
+                    <span onClick={this.showEditForm}>edit</span>
+                    <div className='spell-data'>
+                        <h4>{spell.die_number}d{spell.die_type} {spell.damage_type}</h4>
+                    </div>
+                    <h6>{spell.description.length < 40 || this.state.showMore ? spell.description : spell.description.slice(0, 40) + '...'}</h6>
                 </div>
                 {this.state.showEditForm ?
                     <div className='form'>

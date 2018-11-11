@@ -1,6 +1,6 @@
 class Api::SpellsController < ApplicationController
     def index
-        @spells = Character.find(params[:character_id]).spells.all
+        @spells = Character.find(params[:character_id]).spells.all.order("created_at")
         render json: @spells
     end
 

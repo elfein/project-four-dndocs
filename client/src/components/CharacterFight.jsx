@@ -257,6 +257,7 @@ export default class CharacterFight extends Component {
             <div>
                 <img src={this.props.classImg} alt='classpic' />
                 <div>
+                    <h3>+{character.prof} Proficiency</h3>
                     <h3>Encounter #{this.props.encounter.id}</h3>
                     <button onClick={this.showEndModal}>End Fight</button>
                     <span><h1>HP: {character.current_hp}</h1> / {character.max_hp} </span>
