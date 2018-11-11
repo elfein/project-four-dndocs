@@ -16,7 +16,8 @@ export default class CharacterSpellContainer extends Component {
     }
 
     getApiSpells = async () => {
-        const apiSpells = await axios.get('http://www.dnd5eapi.co/api/spells/')
+        const apiSpells = await axios.get('//www.dnd5eapi.co/api/spells/')
+        console.log(apiSpells, 'hi')
         this.setState({ apiSpells: apiSpells.data.results })
     }
 
