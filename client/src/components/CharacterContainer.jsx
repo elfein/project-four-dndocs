@@ -25,7 +25,6 @@ footer {
 img {
     height: 50px;
 }
-
 `
 
 export default class CharacterContainer extends Component {
@@ -186,6 +185,7 @@ export default class CharacterContainer extends Component {
 
         {this.state.showLog ?
           <CharacterLog
+            getCharacter={this.getCharacter}
             character={character}
             classImg={this.state.classImg} />
           : null}

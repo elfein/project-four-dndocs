@@ -48,6 +48,7 @@ export default class CharacterLog extends Component {
                 />
                 <div id='chart'></div>
                 <HealthChart 
+                getCharacter={this.props.getCharacter}
                 character={this.props.character}
                 />
             </div>
