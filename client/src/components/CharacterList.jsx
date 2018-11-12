@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import CharacterItem from './CharacterItem';
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+padding: 24px 0;
+`
 
 export default class CharacterList extends Component {
     state = {
@@ -22,9 +27,9 @@ export default class CharacterList extends Component {
           return <CharacterItem key={i} character={character} accountId={this.props.id} />
       })
     return (
-      <div>
+      <StyledDiv>
         {characterList}
-      </div>
+      </StyledDiv>
     )
   }
 }

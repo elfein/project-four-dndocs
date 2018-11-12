@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import WeaponList from './WeaponList';
 import ItemList from './ItemList';
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+
+`
 
 export default class CharacterItemContainer extends Component {
   render() {
     return (
-      <div>
+      <StyledDiv>
 
         <p>Weapons</p>
         <WeaponList
@@ -19,7 +24,7 @@ export default class CharacterItemContainer extends Component {
           character={this.props.character}
         />
 
-      </div>
+      </StyledDiv>
     )
   }
 }
