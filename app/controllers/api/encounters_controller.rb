@@ -1,6 +1,6 @@
 class Api::EncountersController < ApplicationController
     def index
-        @encounters = Character.find(params[:character_id]).encounters.all
+        @encounters = Character.find(params[:character_id]).encounters.all.order("id DESC")
         render json: @encounters
     end
 

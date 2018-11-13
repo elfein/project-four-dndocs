@@ -28,6 +28,8 @@ select {
 }
 [type~=submit] {
   background-color: rgb(140,189,134);
+  background: rgb(140,189,134);
+  border-radius: 0;
   width: 100%;
   border: none;
   &:hover {

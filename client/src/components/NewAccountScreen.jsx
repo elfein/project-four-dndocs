@@ -19,7 +19,9 @@ input {
 }
 [type~=submit] {
   background-color: rgb(140,189,134);
+  background: rgb(140,189,134);
   width: 100%;
+  border-radius: 0;
 }
 #cancel {
   background-color: rgb(215,190,140);

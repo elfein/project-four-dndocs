@@ -248,8 +248,8 @@ export default class AttackSpellItem extends Component {
                             onChange={this.handleChange} />
 
                         <div>
-                            <button className='cancel' onClick={this.handleSubmit}><i className="far fa-check-square"></i> Save</button>
-                            <button className='submit' onClick={this.hideEditForm}><i className="fas fa-arrow-left"></i> Cancel</button>
+                            <button className='submit' onClick={this.handleSubmit}><i className="far fa-check-square"></i> Save</button>
+                            <button className='cancel' onClick={this.hideEditForm}><i className="fas fa-arrow-left"></i> Cancel</button>
                         </div>
 
                         <div>

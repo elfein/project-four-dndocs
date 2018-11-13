@@ -30,9 +30,6 @@ button {
   background: rgb(150,189,114);
   border: none;
   padding: 3px 6px;
-  &:active, &:focus {
-  opacity: 0.3;
-}
 &:hover {
   opacity: 0.6;
 }

@@ -1,6 +1,6 @@
 class Api::HpactionsController < ApplicationController
     def index
-        @hpactions = Encounter.find(params[:encounter_id]).hpactions.all
+        @hpactions = Encounter.find(params[:encounter_id]).hpactions.all.order("id DESC")
         render json: @hpactions
     end
 
