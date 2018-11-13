@@ -1,24 +1,49 @@
-# README
+# DnDocs - Dungeons & Dragons Assistant
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application assists D&D players with the calculation side of their favorite game. With DnDocs, users can create multiple characters within one account, then keep track of the character's weapons, items, spells, and other stats. 
 
-Things you may want to cover:
+Using Fight Mode, users can generate die rolls including optional modifiers, and input changes to the characters health points.
 
-* Ruby version
+Using the Character Log, users can see a visual representation of their characters' information.
 
-* System dependencies
+## [Link to App](https://project-four-dndocs.herokuapp.com/)
 
-* Configuration
+## Technologies Used
 
-* Database creation
+- Ruby on Rails
+- PostgreSQL
+- React.js
+- Active Record
+- styled-components
+- react-router-dom
+- [react-d3-radar](https://www.npmjs.com/package/react-d3-radar)
+- a small amount of D3
 
-* Database initialization
+## Credits
 
-* How to run the test suite
+- [D&D 5e API](http://www.dnd5eapi.co/)
+- [CSS Tricks](https://css-tricks.com/forums/topic/trying-to-set-state-using-with-time-delay/)
+- [Michael Menz's D3 Tutorial on Youtube](https://www.youtube.com/watch?v=219xXJRh4Lw)
 
-* Services (job queues, cache servers, search engines, etc.)
+## App Features
+- Calls to 3rd Party API to autofill spell names and descriptions
+- Mobile-first design to benefit tabletop players
+- Responsive data visualizations
+- Intuitive Fight Mode that logs each health point-related action
+- Full CRUD on accounts, characters, weapons, items, and spells
 
-* Deployment instructions
+## Planning
+### [User Stories on Trello](https://trello.com/b/0YHdmU5Y/dndocs-app)
 
-* ...
+### [Wireframes](https://66.media.tumblr.com/40d467653b7a8a5889131ace3fe2f014/tumblr_pi58l05u211uj0ljmo1_1280.jpg)
+
+### [ERDs](https://66.media.tumblr.com/1238c7c9edf02affcb9b089c59bc504d/tumblr_pi58l05u211uj0ljmo2_r1_1280.png)
+
+## Considerations
+- __I would love to keep building out functionality over time, so my friends and I could actually handle in-person games more easily.__ The game is still nowehere near capable of handling all the edge-cases involves in a real game, such as multiple damage-types per spell or weapon, character-specific proficiencies, advantage and disadvantage on rolls, and more. 
+
+- __Integrating D3 was my reach goal and a large source of struggle.__ I'm still hoping to get more practice with both D3 and methods to integrate it into React.
+
+- __Would still like bring in 3rd Party API to assist with weapon creation in the same way it has been brought in for spells.__ It was really fun to handle populating suggested spell names and information.
+
+- I'm also interested in making this interactive for multiple players.
