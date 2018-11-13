@@ -12,7 +12,7 @@ emmy = Account.create(name: 'Emmy')
 bre = Account.create(name: 'Bre')
 ivy = Account.create(name: 'Ivy')
 
-riley = emmy.characters.create(name: 'Riley Deerchaser', class_name: 'Barbarian', race: 'Goliath', max_hp: 105, current_hp: 115, str: 20, dex: 14, con: 16, int: 8, wis: 10, cha: 13, prof: 4, level: 10)
+riley = emmy.characters.create(name: 'Riley Deerchaser', class_name: 'Barbarian', race: 'Goliath', max_hp: 105, current_hp: 105, str: 20, dex: 14, con: 16, int: 8, wis: 10, cha: 13, prof: 4, level: 10)
 sylfare = emmy.characters.create(name: 'Sylfare Meriele', class_name: 'Bard', race: 'Half-Elf', max_hp: 63, current_hp: 54, str: 8, dex: 16, con: 13, int: 10, wis: 14, cha: 18, prof: 4, level: 10)
 silas = bre.characters.create(name: 'Silas Naïlo', class_name: 'Druid', race: 'Half-Elf', max_hp: 63, current_hp: 63, str: 10, dex: 14, con: 10, int: 15, wis: 16, cha: 12, prof: 4, level: 10)
 medusa = ivy.characters.create(name: 'Medusa', class_name: 'Sorcerer', race: 'Siren', max_hp: 50, current_hp: 50, str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10, prof: 10, level: 5)
@@ -29,6 +29,7 @@ thunder = sylfare.spells.create(name: 'Thunderwave', attack: true, prof: true, c
 mi = sylfare.spells.create(name: 'Minor Illusion', attack: false, prof: true, components: 'V,S,M', casting_time: '1 Action', skill: 'cha', duration: '10 minutes', description: 'A visual illusion appears in an area the caster can see. A creature can roll an investigation check against the caster\'s spell save DC to determine the integrity of the illusion.')
 moon = silas.spells.create(name: 'Moonbeam', attack: true, prof: true, components: 'V', casting_time: '1 Action', skill: 'wis', die_number: 4, die_type: 8, damage_type: 'Radiant', description: 'All creatures in a column with a radius of 20ft take 4d8 radiant damage.')
 
+pin = riley.items.create(name: 'Daffodil Hair Pin', description:'Three daffodils arranged on a gold fastener; enchanted to live forever. A gift from Silas. <3')
 pk = riley.items.create(name: 'Painter\'s Kit', description: 'A simple set of paints and brushes.')
 whet = riley.items.create(name: 'Whetstone', description: 'A tool for sharpening metal weapons.')
 cloak = sylfare.items.create(name: 'Cloak of Many Fashions', description: 'The color and appearance of this cloak can be changed at will.')
