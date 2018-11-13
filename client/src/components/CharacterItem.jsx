@@ -4,16 +4,25 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const StyledDiv = styled.div`
-padding: 12px;
+padding: 2px;
+background-color: rgb(255,240,210);
+color: rgb(40,65,74);
+margin: 3px 0;
 img {
     height: 50px;
+    background-color: rgb(40,65,74);
+    padding: 6px;
+    border-radius: 1px;
 }
 display: flex;
 div {
-    padding: 0 12px;
+    padding: 12px;
 }
 h3, h5 {
     margin: 0;
+}
+h3 {
+    text-transform: uppercase;
 }
 `
 

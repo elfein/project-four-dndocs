@@ -17,16 +17,18 @@ export default class AccountList extends Component {
         this.setState({ accounts })
     }
 
-  render() {
+    render() {
 
-    const accountList = this.state.accounts.map((account, i) => {
-        return <AccountItem key={i} account={account} />
-    })
+        const accountList = this.state.accounts.map((account, i) => {
+            return <AccountItem key={i} account={account} />
+        })
 
-    return (
-      <div>
-        {accountList}
-      </div>
-    )
-  }
+        return (
+            <div>
+                <div className='list'>
+                    {accountList}
+                </div>
+            </div>
+        )
+    }
 }

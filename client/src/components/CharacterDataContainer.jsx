@@ -13,6 +13,22 @@ const StyledDiv = styled.div`
     height: 100px;
   }
 }
+.selectors {
+  margin: 30px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  button {
+    width: 32vw;
+    background-color: rgb(215,190,120);
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 12px;
+  }
+  .selected {
+    background-color: rgb(185,120,90);
+    opacity: 1;
+  }
+}
 `
 
 export default class CharacterDataContainer extends Component {
@@ -39,9 +55,9 @@ export default class CharacterDataContainer extends Component {
     return (
       <StyledDiv>
         <div className="selectors">
-          <button onClick={this.showSkills}>Skills</button>
-          <button onClick={this.showItems}>Inventory</button>
-          <button onClick={this.showSpells}>Spells</button>
+          <button className={this.state.showStats ? 'selected' : ''} onClick={this.showSkills}>Skills</button>
+          <button className={this.state.showItems ? 'selected' : ''} onClick={this.showItems}>Inventory</button>
+          <button className={this.state.showSpells ? 'selected' : ''} onClick={this.showSpells}>Spells</button>
         </div>
 
         {this.state.showStats ?

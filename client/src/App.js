@@ -11,21 +11,31 @@ import EditCharacterScreen from './components/EditCharacterScreen';
 import styled from 'styled-components'
 import HeroImage from './components/HeroImage';
 
-const StyledDiv = styled.div`background: rgba(20,9,24,0.9);
-color: rgb(255,255,255);
+const StyledDiv = styled.div`
+background: rgb(20,39,54);
+color: rgb(255,240,210);
 min-height: 100vh;
 height: 100%;
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 *:focus {outline:none}
+body {
+  cursor: pointer;
+}
 a {
   color: rgb(230,230,230);
   text-decoration: none;
 }
 button {
-  color: rgb(255,255,255);
-  background: none;
-  border: 1px solid #fff;
-  border-radius: 20px;
+  color: rgba(20,9,24,0.9);
+  background: rgb(150,189,114);
+  border: none;
+  padding: 3px 6px;
+  &:active, &:focus {
+  opacity: 0.3;
+}
+&:hover {
+  opacity: 0.6;
+}
 }
 h2 {
   margin: 0;
@@ -33,10 +43,10 @@ h2 {
   font-weight: 800;
 }
 .container {
-  background: rgba(20,9,24,0.9);
-  background: linear-gradient(to bottom right, rgba(39,29,44,0.9), rgba(10,3,14,0.9));
+  background: rgb(40,65,74);
   height: 100%;
-  min-height: 90vh;
+  min-height: 80vh;
+  padding: 24px 0;
 }
 `
 

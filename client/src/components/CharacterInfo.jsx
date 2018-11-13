@@ -1,7 +1,51 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import CharacterDataContainer from './CharacterDataContainer';
+
+const StyledDiv = styled.div`
+img {
+    background-color: rgb(40,65,74);
+    padding: 6px;
+}
+.top {
+background-color: rgb(255,240,210);
+color: rgb(40,65,74);
+padding: 3px;
+display: flex;
+h3 {
+    margin: 5px;
+}
+}
+.hp {
+    display: flex;
+    margin: 3px 0;
+    button {
+        text-transform: uppercase;
+        font-weight: 600;
+        background: rgb(140,169,84);
+        margin: 0 3px 0 0;
+        i {
+            display: block;
+        }
+    }
+}
+span {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    background-color: rgb(80,175,164);
+    width: 100%;
+}
+#fight {
+    width: 100%;
+    padding: 12px;
+    background-color: rgb(230,180,40);
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(40,65,74);
+}
+`
 
 const StyledModalGroup = styled.div`
 #overlay {
@@ -69,15 +113,20 @@ export default class CharacterInfo extends Component {
         const character = this.props.character
         return (
             <div>
-                <img src={this.props.classImg} alt='classpic' />
-                <div>
-                    <h3>Level {character.level}</h3>
-                    <h3>{character.race} {character.class_name}</h3>
-                    <span><h1>HP: {character.current_hp}</h1> / {character.max_hp} </span>
-                </div>
-                <div><Link to={`/characters/${character.id}/edit`}><button>Edit</button></Link></div>
-                <button onClick={this.showFightModal}>Fight</button>
-                <button onClick={this.props.takeLongRest}>Long Rest</button>
+                <StyledDiv>
+                    <div className='top' >
+                        <img src={this.props.classImg} alt='classpic' />
+                        <div>
+                            <h3>Level {character.level}</h3>
+                            <h3>{character.race} {character.class_name}</h3>
+                        </div>
+                    </div>
+                    <div className='hp'>
+                        <button onClick={this.props.takeLongRest}><i className="fas fa-bed"></i>Long Rest</button>
+                        <span><h1>HP: {character.current_hp} </h1> /{character.max_hp} </span>
+                    </div>
+                    <button id='fight' onClick={this.showFightModal}>* Fight *</button>
+                </StyledDiv>
 
                 <CharacterDataContainer
                     getCharacter={this.props.getCharacter}

@@ -7,7 +7,7 @@ import CharacterFight from './CharacterFight';
 import CharacterLog from './CharacterLog';
 
 const StyledDiv = styled.div`
-margin: 0 0 50px 0;
+margin: 0 0 30px 0;
 
 footer {
   text-align: center;
@@ -16,14 +16,33 @@ footer {
   bottom: 0;
   left: 0;
   z-index: 2000;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgb(215,190,140);
+  display: flex;
+  justify-content: space-around;
   button {
+    background: rgb(255,240,210);
+    height: 42px;
     width: 30vw;
+    text-transform: uppercase;
+    font-weight: 600;
+    i {
+      font-size: 18px;
+      display: block;
+      margin: 0 0 3px 0;
+    }
   }
 }
 
 img {
     height: 50px;
+}
+.name {
+  display: flex;
+  align-items: baseline;
+  img {
+        height: 15px;
+        margin: 2px 5px;
+    }
 }
 `
 
@@ -160,8 +179,11 @@ export default class CharacterContainer extends Component {
     const character = this.state.character
     return (
       <StyledDiv>
-        <Link to={`/accounts/${this.state.character.account_id}`}>To Account</Link>
-        <h2>{character.name}</h2>
+        <Link to={`/accounts/${this.state.character.account_id}`}><i className="fas fa-arrow-left"></i> To Account</Link>
+        <div className='name'>
+          <h2>{character.name}</h2>
+          <Link to={`/characters/${character.id}/edit`}><img src='https://66.media.tumblr.com/d33c851c69aa1bbe6cdd1d379528bcf2/tumblr_pi3cflCkjk1uj0ljmo4_r1_1280.png' alt='settings' /></Link>
+        </div>
 
         {this.state.showInfo ?
           <CharacterInfo
@@ -191,9 +213,9 @@ export default class CharacterContainer extends Component {
           : null}
 
         <footer>
-          <button onClick={this.toggleInfo}>Info</button>
-          <button onClick={this.toggleFight}>Fight</button>
-          <button onClick={this.toggleLog}>Log</button>
+          <button onClick={this.toggleInfo}><i className="far fa-user-circle"></i> Info</button>
+          <button onClick={this.toggleFight}><i className="far fa-sun"></i> Fight</button>
+          <button onClick={this.toggleLog}><i className="far fa-clock"></i> Log</button>
         </footer>
       </StyledDiv>
     )

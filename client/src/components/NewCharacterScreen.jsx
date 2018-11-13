@@ -8,19 +8,61 @@ const StyledDiv = styled.div`
     display: none;
 }
 
+p {
+    margin: 12px 0 3px 0;
+}
+input, select {
+    padding: 12px 2vw;
+    font-size: 18px;
+}
+input {
+    width: 96vw;
+}
+select {
+    background-color: #fff;
+    color: #000;
+    width: 100vw;
+    padding: 12px 2vw;
+    border-radius: 0;
+}
+h5 {
+    color: rgb(205,30,30);
+    margin: 3px 0;
+    font-size: 18px;
+}
+
 .skill {
     h6 {
-        margin: 4px 0 10px 0;
+        margin: 3px 0 15px 0;
     }
-    width: 110px;
     input {
-        width: 100px;
+        width: 28vw;
     }
+    width: 31vw;
 }
 
 .skill-group {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+[type~=submit] {
+  background-color: rgb(140,189,134);
+  width: 100%;
+  border: none;
+  margin: 0 0 3px 0;
+}
+#cancel {
+  background-color: rgb(215,190,140);
+  width: 100vw;
+}
+[type~=submit], #cancel {
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 9px 2vw;
+    color: rgb(40,65,74);
 }
 `
 
@@ -120,7 +162,7 @@ export default class NewCharacterScreen extends Component {
         return (
             <StyledDiv>
                 <form onSubmit={this.handleSubmit} >
-                    <h1>New Character</h1>
+                    <h2>New Character</h2>
                     <p>Name</p>
                     <input placeholder='Name'
                         type='text'
@@ -128,7 +170,7 @@ export default class NewCharacterScreen extends Component {
                         value={this.state.newCharacter.name}
                         onChange={this.handleChange}
                     />
-                    <h6 className={this.state.nameError ? '' : 'hidden'} >Character Name cannot be empty.</h6>
+                    <h5 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h5>
 
                     <p>Race</p>
                     <input placeholder='Race'
@@ -154,7 +196,7 @@ export default class NewCharacterScreen extends Component {
                         <option value='Warlock'>Warlock</option>
                         <option value='Wizard'>Wizard</option>
                     </select>
-                    <h6 className={this.state.classError ? '' : 'hidden'} >Class cannot be empty.</h6>
+                    <h5 className={this.state.classError ? '' : 'hidden'} >Class cannot be empty.</h5>
 
                     <p>Hit Points</p>
                     <input placeholder='HP'
@@ -163,7 +205,7 @@ export default class NewCharacterScreen extends Component {
                         value={this.state.newCharacter.max_hp}
                         onChange={this.handleChange}
                     />
-                    <h6 className={this.state.hpError ? '' : 'hidden'} >Hit Points cannot be empty.</h6>
+                    <h5 className={this.state.hpError ? '' : 'hidden'} >Hit Points cannot be empty.</h5>
 
                     <p>Level</p>
                     <input placeholder='Level'
@@ -172,7 +214,7 @@ export default class NewCharacterScreen extends Component {
                         value={this.state.newCharacter.level}
                         onChange={this.handleChange}
                     />
-                    <h6 className={this.state.levelError ? '' : 'hidden'} >Level cannot be empty.</h6>
+                    <h5 className={this.state.levelError ? '' : 'hidden'} >Level cannot be empty.</h5>
 
                     <p>Skills</p>
                     <div className='skill-group'>
@@ -237,7 +279,7 @@ export default class NewCharacterScreen extends Component {
                     </div>
                 </form>
                 <div>
-                    <Link to={`/accounts/${this.props.match.params.id}`}><button>Cancel</button></Link>
+                    <Link to={`/accounts/${this.props.match.params.id}`}><button id='cancel'>Cancel</button></Link>
                 </div>
             </StyledDiv>
         )

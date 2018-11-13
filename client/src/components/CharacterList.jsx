@@ -4,7 +4,6 @@ import CharacterItem from './CharacterItem';
 import styled from 'styled-components'
 
 const StyledDiv = styled.div`
-padding: 24px 0;
 `
 
 export default class CharacterList extends Component {

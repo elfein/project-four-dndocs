@@ -3,15 +3,25 @@ import styled from 'styled-components'
 import axios from 'axios'
 
 const StyledDiv = styled.div`
-text-align: center;
-width: 110px;
-height: 60px;
+width: 32vw;
+margin: 3px 0;
+padding: 12px 0;
+color: rgb(40,65,74);
+background-color: rgb(255,240,210);
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 h6 {
-    margin: 4px 0 10px 0;
+    margin: 4px 0;
 }
 input {
     text-align: center;
     width: 100px;
+}
+p {
+    font-size: 27px;
+    margin: 0;
 }
 `
 
@@ -59,7 +69,7 @@ export default class StatItem extends Component {
         return (
             <StyledDiv onClick={this.showForm}>
                 {this.state.showForm ? <input type='number' autoFocus onBlur={this.endForm} value={this.state.stat[1]} onChange={this.handleChange} /> 
-                : this.state.stat[1]}
+                : <p>{this.state.stat[1]}</p>}
                 <h6>{this.state.stat[0]}</h6>
             </StyledDiv>
         )

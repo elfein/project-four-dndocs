@@ -7,6 +7,31 @@ const StyledDiv = styled.div`
 .hidden {
     display: none;
 }
+p {
+   margin: 12px 0 3px 0; 
+}
+input {
+  width: 96vw;
+  border: none;
+  padding: 9px 2vw;
+  margin: 0 0 3px 0;
+  font-size: 18px;
+}
+[type~=submit] {
+  background-color: rgb(140,189,134);
+  width: 100%;
+}
+#cancel {
+  background-color: rgb(215,190,140);
+  width: 100vw;
+}
+[type~=submit], #cancel {
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 9px 2vw;
+    color: rgb(40,65,74);
+}
 `
 
 export default class NewAccountScreen extends Component {
@@ -67,7 +92,7 @@ export default class NewAccountScreen extends Component {
                 </form>
 
                 <div>
-                    <Link to='/'><button>Cancel</button></Link>
+                    <Link to='/'><button id='cancel'>Cancel</button></Link>
                 </div>
             </StyledDiv>
         )

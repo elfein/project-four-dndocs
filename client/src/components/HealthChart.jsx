@@ -5,7 +5,6 @@ import * as d3 from 'd3'
 
 const StyledDiv = styled.div`
 .line-container {
-  margin: 20px;
   fill: none;
 }
 .line { 
@@ -37,7 +36,7 @@ export default class HealthChart extends Component {
             const data = this.state.hpactions.slice(0, 10)
 
             const margin = { top: 30, right: 30, bottom: 30, left: 30 },
-                width = 350 - margin.left - margin.right,
+                width = 320 - margin.left - margin.right,
                 height = 300 - margin.top - margin.bottom
 
             const x = d3.scaleLinear().range([0, width])
@@ -60,8 +59,6 @@ export default class HealthChart extends Component {
             svg.append("path")
                 .attr("class", "line")
                 .attr("d", valueline(data))
-
-            console.log(data)
 
             svg.append('g')
                 .attr("transform", "translate(0," + height + ")")

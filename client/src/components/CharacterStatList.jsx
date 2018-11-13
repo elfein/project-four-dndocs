@@ -5,7 +5,9 @@ import styled from 'styled-components'
 const StyledDiv = styled.div`
 display: flex;
 flex-wrap: wrap;
-justify-content: center;
+justify-content: space-around;
+background-color: rgb(185,120,90);
+padding: 3px 0;
 `
 
 export default class CharacterStatList extends Component {
