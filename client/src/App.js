@@ -10,6 +10,7 @@ import EditAccountScreen from './components/EditAccountScreen';
 import EditCharacterScreen from './components/EditCharacterScreen';
 import styled from 'styled-components'
 import HeroImage from './components/HeroImage';
+import ErrorMessage from './components/ErrorMessage';
 
 const StyledDiv = styled.div`
 background: rgb(20,39,54);
@@ -68,6 +69,7 @@ class App extends Component {
                 <Route exact path="/accounts/:id/characters/new" component={NewCharacterScreen} />
                 <Route exact path="/characters/:id" component={CharacterContainer} />
                 <Route exact path="/characters/:id/edit" component={EditCharacterScreen} />
+                <Route path='*' component={ ErrorMessage } />
               </Switch>
             </div>
           </div>
