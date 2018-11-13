@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import CharacterSpellContainer from './CharacterSpellContainer';
 
 const StyledDiv = styled.div`
+white-space: pre-line;
 .form {
   background-color: rgba(255,255,255,0.5);
   [type~=text] {
