@@ -23,6 +23,9 @@ p {
     font-size: 27px;
     margin: 0;
 }
+@media (min-device-width: 1000px) {
+    max-width: 180px;
+}
 `
 
 export default class StatItem extends Component {

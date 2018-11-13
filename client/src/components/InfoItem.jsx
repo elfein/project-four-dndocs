@@ -159,7 +159,7 @@ export default class InfoItem extends Component {
         <div onClick={this.toggleMore}>
           <h3>{item.name}</h3>
           <span onClick={this.showEditform}><i className="fas fa-edit"></i></span>
-          <h6 className='item-data'>{item.description.length < 40 || this.state.showMore ? item.description : item.description.slice(0, 40) + '...'}</h6>
+          <h6 className='item-data'>{item.description.length < 66 || this.state.showMore ? item.description : item.description.slice(0, 66) + '...'}</h6>
         </div>
         {this.state.showEditform ?
           <div className='form'>

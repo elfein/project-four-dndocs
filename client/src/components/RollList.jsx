@@ -14,8 +14,6 @@ export default class RollList extends Component {
                 maxVal={maxVal} />
         })
 
-        console.log(maxVal)
-        
         return (
             <div>
                 {rollList}

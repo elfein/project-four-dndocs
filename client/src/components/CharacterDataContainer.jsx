@@ -62,6 +62,17 @@ button {
     opacity: 1;
   }
 }
+@media (min-device-width: 1000px) {
+.submit, .cancel, #delete-toggle, select {
+  max-width: 600px;
+}
+input {
+  max-width: 540px;
+}
+textarea {
+  max-width: 580px;
+}
+}
 `
 
 export default class CharacterDataContainer extends Component {

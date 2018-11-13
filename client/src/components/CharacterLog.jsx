@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Radar from 'react-d3-radar'
-import HealthChart from './HealthChart';
 import styled from 'styled-components'
 import Hplist from './Hplist';
 
@@ -22,7 +21,7 @@ h3 {
 .radar {
     background-color: rgb(255,250,230);
     max-width: 400px;
-    margin: 12px 0;
+    margin: 12px auto;
     padding: 12px 0 0 0;
     h4 {
         color: rgb(40,65,74);
@@ -82,11 +81,7 @@ export default class CharacterLog extends Component {
                 <Hplist
                     getCharacter={this.props.getCharacter}
                     character={this.props.character}
-                />
-                <HealthChart
-                    getCharacter={this.props.getCharacter}
-                    character={this.props.character}
-                />
+                /> 
             </StyledDiv>
         )
     }

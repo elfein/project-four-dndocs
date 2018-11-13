@@ -23,6 +23,12 @@ const StyledDiv = styled.div`
     width: 90%;
     margin: 0 auto;
 }
+
+@media (min-device-width: 1000px) {
+.add {
+  max-width: 600px;
+}
+}
 `
 
 export default class OtherSpellList extends Component {
@@ -149,8 +155,8 @@ export default class OtherSpellList extends Component {
                             onChange={this.handleChange} />
 
                         <div>
-                            <button className='cancel' onClick={this.hideNewForm}><i className="fas fa-arrow-left"></i> Cancel</button>
                             <button className='submit' onClick={this.handleSubmit}><i className="far fa-check-square"></i> Add Spell</button>
+                            <button className='cancel' onClick={this.hideNewForm}><i className="fas fa-arrow-left"></i> Cancel</button>
                         </div>
 
                     </div>

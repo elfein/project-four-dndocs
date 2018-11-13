@@ -44,6 +44,14 @@ button {
     padding: 9px 2vw;
     color: rgb(40,65,74);
 }
+@media (min-device-width: 1000px) {
+input, button {
+  max-width: 600px;
+}
+[type~=text]{
+    max-width: 572px;
+}
+}
 `
 
 const StyledOverlay = styled.div`

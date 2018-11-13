@@ -17,6 +17,11 @@ const StyledDiv = styled.div`
     padding: 6px 0;
     text-align: left;
 }
+@media (min-device-width: 1000px) {
+.add {
+  max-width: 600px;
+}
+}
 `
 
 export default class ItemList extends Component {

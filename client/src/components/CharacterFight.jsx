@@ -386,7 +386,7 @@ export default class CharacterFight extends Component {
                         </div>
                         <div>
                             <button id='modal-cancel' onClick={this.hideHealModal}>Cancel</button>
-                            <input type='submit' id='modal-fight' value='Confirm' onClick={this.handleHealSubmit} />
+                            <button id='modal-fight' onClick={this.handleHealSubmit} >Confirm</button>
                         </div>
                     </div>
                     <div id='overlay' onClick={this.hideHealModal} className={this.state.showHealModal ? '' : 'hidden'} ></div>

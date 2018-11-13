@@ -45,26 +45,33 @@ h2 {
   min-height: 80vh;
   padding: 24px 0;
 }
+
+@media (min-device-width: 1000px) {
+  max-width: 600px;
+  margin: 0 auto;
+}
 `
 
 class App extends Component {
   render() {
     return (
       <StyledDiv>
-        <HeroImage />
-        <div className="container">
-          <Router>
-            <Switch>
-              <Route exact path="/" component={AccountsScreen} />
-              <Route exact path="/accounts/new" component={NewAccountScreen} />
-              <Route exact path="/accounts/:id" component={AccountScreen} />
-              <Route exact path="/accounts/:id/edit" component={EditAccountScreen} />
-              <Route exact path="/accounts/:id/characters/new" component={NewCharacterScreen} />
-              <Route exact path="/characters/:id" component={CharacterContainer} />
-              <Route exact path="/characters/:id/edit" component={EditCharacterScreen} />
-            </Switch>
-          </Router>
-        </div>
+        <Router>
+          <div>
+            <HeroImage />
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={AccountsScreen} />
+                <Route exact path="/accounts/new" component={NewAccountScreen} />
+                <Route exact path="/accounts/:id" component={AccountScreen} />
+                <Route exact path="/accounts/:id/edit" component={EditAccountScreen} />
+                <Route exact path="/accounts/:id/characters/new" component={NewCharacterScreen} />
+                <Route exact path="/characters/:id" component={CharacterContainer} />
+                <Route exact path="/characters/:id/edit" component={EditCharacterScreen} />
+              </Switch>
+            </div>
+          </div>
+        </Router>
       </StyledDiv>
     );
   }

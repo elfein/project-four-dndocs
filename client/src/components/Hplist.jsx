@@ -82,7 +82,7 @@ export default class Hplist extends Component {
                 break
             default:
                 actualList = this.state.hpactions.filter((hpaction) => {
-                    return hpaction.encounter_id == this.state.selectedActionList
+                    return hpaction.encounter_id === this.state.selectedActionList
                 })
                 break
         }

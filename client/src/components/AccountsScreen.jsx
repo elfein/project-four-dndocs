@@ -14,6 +14,11 @@ const StyledDiv = styled.div`
   font-weight: 600;
   padding:12px;
 }
+@media (min-device-width: 1000px) {
+button {
+  max-width: 600px;
+}
+}
 `
 
 export default class AccountsScreen extends Component {

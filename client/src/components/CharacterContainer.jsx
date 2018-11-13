@@ -9,12 +9,21 @@ import CharacterLog from './CharacterLog';
 const StyledDiv = styled.div`
 margin: 0 0 30px 0;
 
+@media (min-device-width: 1000px) {
+    footer {
+      margin: 0 auto;
+      max-width: 600px;
+      button {
+        max-width: 180px;
+      }
+    }
+}
+
 footer {
   text-align: center;
   width: 100%;
   position: fixed;
   bottom: 0;
-  left: 0;
   z-index: 2000;
   background-color: rgb(215,190,140);
   display: flex;

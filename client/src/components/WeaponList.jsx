@@ -21,6 +21,11 @@ const StyledDiv = styled.div`
         opacity: 1;
     }
 }
+@media (min-device-width: 1000px) {
+.add {
+  max-width: 600px;
+}
+}
 `
 
 export default class WeaponList extends Component {

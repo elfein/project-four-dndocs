@@ -27,6 +27,11 @@ margin: 1px 0 0 0;
 .heal {
     background-color: rgb(150,189,114);
 }
+@media (min-device-width: 1000px) {
+.source {
+    max-width: 200px;
+}
+}
 `
 
 export default class RollItem extends Component {
@@ -49,14 +54,12 @@ export default class RollItem extends Component {
 
       let width = parseInt(70 * (abolsuteWidth) / this.props.maxVal)
 
-      console.log(width)
-
     return (
       <StyledDiv>
         <div className='source' onClick={this.toggleNum}>
             <h5>{this.props.roll.source}</h5>
         </div>
-        <div className={`${classType} bar`} style={{width:`${width}vw`}}></div>
+        <div className={`${classType} bar`} style={{width:`${width}%`}}></div>
       </StyledDiv>
     )
   }

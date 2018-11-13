@@ -27,6 +27,11 @@ const StyledDiv = styled.div`
         opacity: 1;
     }
 }
+@media (min-device-width: 1000px) {
+.add {
+  max-width: 600px;
+}
+}
 `
 
 export default class AttackSpellList extends Component {
@@ -66,7 +71,9 @@ export default class AttackSpellList extends Component {
                 bonus: 0,
                 attack: true
             },
-            possibleSpells: []
+            possibleSpells: [],
+            nameError: false, 
+            numberError: false
         })
     }
 
@@ -219,8 +226,8 @@ export default class AttackSpellList extends Component {
                             onChange={this.handleChange} />
 
                         <div>
-                            <button className='cancel' onClick={this.hideNewForm}><i className="fas fa-arrow-left"></i> Cancel</button>
                             <button className='submit' onClick={this.handleSubmit}><i className="far fa-check-square"></i> Add Spell</button>
+                            <button className='cancel' onClick={this.hideNewForm}><i className="fas fa-arrow-left"></i> Cancel</button>
                         </div>
 
                     </div>

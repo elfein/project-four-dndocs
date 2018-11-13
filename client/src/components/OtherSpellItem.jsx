@@ -162,7 +162,7 @@ export default class OtherSpellItem extends Component {
                 <div onClick={this.toggleMore}>
                     <h3>{spell.name}</h3>
                     <span onClick={this.showEditForm}><i className="fas fa-edit"></i></span>
-                    <h6 className='spell-data' >{spell.description.length < 40 || this.state.showMore ? spell.description : spell.description.slice(0, 40) + '...'}</h6>
+                    <h6 className='spell-data' >{spell.description.length < 66 || this.state.showMore ? spell.description : spell.description.slice(0, 66) + '...'}</h6>
                 </div>
                 {this.state.showEditForm ?
                     <div className='form'>

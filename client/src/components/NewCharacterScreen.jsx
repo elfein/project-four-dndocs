@@ -66,6 +66,24 @@ h5 {
     padding: 9px 2vw;
     color: rgb(40,65,74);
 }
+@media (min-device-width: 1000px) {
+button {
+  max-width: 600px;
+}
+input, select {
+    max-width: 572px;
+    padding: 12px;
+}
+[type~=submit]{
+    max-width: 600px;
+}
+.skill {
+    input {
+        max-width: 140px;
+    }
+    max-width: 190px;
+}
+}
 `
 
 export default class NewCharacterScreen extends Component {

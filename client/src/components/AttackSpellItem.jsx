@@ -185,7 +185,7 @@ export default class AttackSpellItem extends Component {
                     <span onClick={this.showEditForm}><i className="fas fa-edit"></i></span>
                     <div className='spell-data'>
                         <h4>{spell.die_number}d{spell.die_type} {spell.damage_type}</h4>
-                        <h6>{spell.description.length < 66 || this.state.showMore ? spell.description : spell.description.slice(0, 66) + '...'}</h6>
+                        <h6>{spell.description.length < 63 || this.state.showMore ? spell.description : spell.description.slice(0, 63) + '...'}</h6>
                     </div>
                 </div>
                 {this.state.showEditForm ?

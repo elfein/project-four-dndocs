@@ -70,6 +70,24 @@ button {
     flex-wrap: wrap;
     justify-content: space-between;
 }
+@media (min-device-width: 1000px) {
+button {
+  max-width: 600px;
+}
+input, select {
+    max-width: 572px;
+    padding: 12px;
+}
+[type~=submit]{
+    max-width: 600px;
+}
+.skill {
+    input {
+        max-width: 140px;
+    }
+    max-width: 190px;
+}
+}
 `
 
 const StyledOverlay = styled.div`
