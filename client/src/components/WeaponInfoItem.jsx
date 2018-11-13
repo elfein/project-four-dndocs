@@ -189,7 +189,6 @@ export default class WeaponInfoItem extends Component {
         </div>
         {this.state.showEditForm ?
           <div className='form'>
-            <button className='cancel' onClick={this.hideEditForm}>Cancel</button>
             <p>Edit {weapon.name}</p>
 
             <h5>Name</h5>
@@ -198,7 +197,7 @@ export default class WeaponInfoItem extends Component {
               name='name'
               value={this.state.updatedWeapon.name}
               onChange={this.handleChange}
-               />
+            />
             <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
             <h5>Damage</h5>
@@ -255,7 +254,7 @@ export default class WeaponInfoItem extends Component {
 
             <div>
               <button id='delete-toggle' onClick={this.showDelete} >
-              <i className="far fa-trash-alt"></i> Delete Weapon
+                <i className="far fa-trash-alt"></i> Delete Weapon
               </button>
             </div>
 

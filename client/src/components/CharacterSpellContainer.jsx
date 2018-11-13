@@ -2,6 +2,18 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import AttackSpellList from './AttackSpellList';
 import OtherSpellList from './OtherSpellList';
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+background-color: rgb(185,120,140);
+color: rgb(20,39,54);
+p {
+  margin: 0;
+  padding: 42px 0 3px 0;
+  font-size: 27px;
+  text-transform: uppercase;
+}
+`
 
 export default class CharacterSpellContainer extends Component {
     state = {
@@ -46,7 +58,7 @@ export default class CharacterSpellContainer extends Component {
 
     render() {
         return (
-            <div>
+            <StyledDiv>
                 <p>Attacks</p>
                 <AttackSpellList
                     setSpells={this.setSpells}
@@ -64,7 +76,7 @@ export default class CharacterSpellContainer extends Component {
                     getCharacter={this.props.getCharacter}
                     character={this.props.character}
                 />
-            </div>
+            </StyledDiv>
         )
     }
 }

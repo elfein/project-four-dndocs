@@ -13,6 +13,20 @@ const StyledDiv = styled.div`
     width: 90%;
     margin: 0 auto;
 }
+.add {
+    width: 100vw;
+    background: rgb(150,189,114);
+    font-size: 18px;
+    text-transform: uppercase;
+    color: rgb(40,65,74);
+    font-weight: 600;
+    padding: 6px 0;
+    text-align: left;
+    border-bottom: 3px solid rgb(40,65,74);
+    &:active, &:focus, &:hover {
+        opacity: 1;
+    }
+}
 `
 
 export default class AttackSpellList extends Component {
@@ -130,10 +144,10 @@ export default class AttackSpellList extends Component {
         let possibleSpellNames = []
         if (this.state.possibleSpells[0]) {
             possibleSpellNames = this.state.possibleSpells.map((spell, i) => {
-                    return <li className='search-result' 
+                    return <div className='search-result' 
                     onClick={() => this.fillSpell(spell['name'])} 
                     key={i}>{spell['name']}
-                    </li>        
+                    </div>        
             })
         }
 
@@ -141,7 +155,7 @@ export default class AttackSpellList extends Component {
             <StyledDiv>
                 {attackSpellList}
                 <div>
-                    <button onClick={this.showNewForm}>+</button>
+                    <button className='add' onClick={this.showNewForm}>+ Add Spell</button>
                 </div>
                 {this.state.showNewForm ?
                     <div className='form'>
@@ -205,8 +219,8 @@ export default class AttackSpellList extends Component {
                             onChange={this.handleChange} />
 
                         <div>
-                            <button onClick={this.hideNewForm}>Cancel</button>
-                            <button onClick={this.handleSubmit}>Add Spell</button>
+                            <button className='cancel' onClick={this.hideNewForm}><i className="fas fa-arrow-left"></i> Cancel</button>
+                            <button className='submit' onClick={this.handleSubmit}><i className="far fa-check-square"></i> Add Spell</button>
                         </div>
 
                     </div>

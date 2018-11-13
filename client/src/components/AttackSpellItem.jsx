@@ -6,6 +6,32 @@ const StyledDiv = styled.div`
 .hidden {
   display: none;
 }
+
+margin: 0 0 30px 0;
+background-color: rgb(235,170,170);
+color: rgb(40,65,74);
+h3 {
+  display: inline;
+}
+i {
+  margin: 9px;
+}
+.spell-data{
+  background-color: rgb(255,240,210);
+  h4 {
+    margin: 3px 0;
+    padding: 9px 0;
+  }
+  h6 {
+    margin: 0;
+    padding: 3px 0;
+  }
+}
+
+.cancel {
+  background-color: rgb(215,190,140);
+  width: 100vw;
+}
 `
 
 const StyledModalGroup = styled.div`
@@ -28,32 +54,46 @@ const StyledModalGroup = styled.div`
 } 
 }
 #modal {
-    button {
+    color: rgb(40,65,74);
+button {
   margin: 10px 20px;
 }
-p {
-  text-align: center;
-}
-#delete {
-  color: red;
-}
+text-align: center;
 position: fixed;
 top: 50%;
 left: 50%;
 transition: transform 0.2s ease, opacity 0.2s ease;
-opacity: 100%;
+opacity: 1;
 z-index: 1010;
-padding: 30px;
 border-radius: 3px;
 background: #fff;
 transform: scale(1) translate(-50%, -50%);
-width: 300px;
+width: 360px;
+p {
+    padding: 24px 0;
+    text-transform: none;
+    font-size: 16px;
+}
 &.hidden {
   transition: transform 0.3s ease, opacity 0.2s ease;
   opacity: 0;
   z-index: -1000;
   transform: scale(0.96) translate(-50%, -46%);
-} 
+}
+#modal-cancel, #modal-delete {
+    margin: 0;
+    width: 50%;
+    height: 36px;
+    text-transform: uppercase;
+}
+#modal-cancel {
+ border-radius: 0 0 0 3px;
+ background-color: rgb(215,190,140);
+}
+#modal-delete {
+ border-radius: 0 0 3px 0;
+ background-color: rgb(215,150,140);
+}
 }
 `
 
@@ -142,11 +182,11 @@ export default class AttackSpellItem extends Component {
             <StyledDiv>
                 <div onClick={this.toggleMore}>
                     <h3>{spell.name}</h3>
-                    <span onClick={this.showEditForm}>edit</span>
+                    <span onClick={this.showEditForm}><i className="fas fa-edit"></i></span>
                     <div className='spell-data'>
                         <h4>{spell.die_number}d{spell.die_type} {spell.damage_type}</h4>
+                        <h6>{spell.description.length < 66 || this.state.showMore ? spell.description : spell.description.slice(0, 66) + '...'}</h6>
                     </div>
-                    <h6>{spell.description.length < 40 || this.state.showMore ? spell.description : spell.description.slice(0, 40) + '...'}</h6>
                 </div>
                 {this.state.showEditForm ?
                     <div className='form'>
@@ -208,13 +248,13 @@ export default class AttackSpellItem extends Component {
                             onChange={this.handleChange} />
 
                         <div>
-                            <button onClick={this.hideEditForm}>Cancel</button>
-                            <button onClick={this.handleSubmit}>Save</button>
+                            <button className='cancel' onClick={this.handleSubmit}><i className="far fa-check-square"></i> Save</button>
+                            <button className='submit' onClick={this.hideEditForm}><i className="fas fa-arrow-left"></i> Cancel</button>
                         </div>
 
                         <div>
-                            <button onClick={this.showDelete} >
-                                Delete spell
+                            <button id='delete-toggle' onClick={this.showDelete} >
+                                <i className="far fa-trash-alt"></i> Delete spell
                              </button>
                         </div>
 
@@ -224,8 +264,8 @@ export default class AttackSpellItem extends Component {
                 <StyledModalGroup>
                     <div id='modal' className={this.state.showDelete ? '' : 'hidden'}>
                         <p>Are you sure you want to delete this spell?</p>
-                        <button onClick={this.hideDelete}>Cancel</button>
-                        <button id='delete' onClick={this.deleteSpell} >Delete Spell</button>
+                        <button id='modal-cancel' onClick={this.hideDelete}>Cancel</button>
+                        <button id='modal-delete' onClick={this.deleteSpell} >Delete Spell</button>
                     </div>
                     <div id='overlay' onClick={this.hideDelete} className={this.state.showDelete ? '' : 'hidden'} ></div>
                 </StyledModalGroup>
