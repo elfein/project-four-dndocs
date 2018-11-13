@@ -81,7 +81,9 @@ export default class Hplist extends Component {
                 })
                 break
             default:
-                actualList = this.state.hpactions
+                actualList = this.state.hpactions.filter((hpaction) => {
+                    return hpaction.encounter_id == this.state.selectedActionList
+                })
                 break
         }
 
@@ -93,7 +95,7 @@ export default class Hplist extends Component {
                     <option value='Attacks'>Attacks</option>
                     <option value='Hits'>Hits</option>
                     <option value='Heals'>Heals</option>
-                    {/* {encounterOptions} */}
+                    {encounterOptions}
                 </select>
                 <RollList
                 rollList={actualList} />
