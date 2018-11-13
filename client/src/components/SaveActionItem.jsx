@@ -30,32 +30,58 @@ const StyledModalGroup = styled.div`
 } 
 }
 #modal {
-    button {
+    color: rgb(40,65,74);
+button {
   margin: 10px 20px;
 }
-p, h1 {
-  text-align: center;
-}
-#delete {
-  color: red;
-}
+text-align: center;
 position: fixed;
 top: 50%;
 left: 50%;
 transition: transform 0.2s ease, opacity 0.2s ease;
-opacity: 100%;
+opacity: 1;
 z-index: 1010;
-padding: 30px;
 border-radius: 3px;
 background: #fff;
 transform: scale(1) translate(-50%, -50%);
-width: 300px;
+width: 360px;
+input {
+    border: 1px solid rgb(100,100,100);
+    margin: 24px 3px;
+}
+p {
+    padding: 24px 0;
+    text-transform: none;
+    font-size: 16px;
+}
+.save-p {
+    margin: 6px;
+    padding: 0;
+}
+h1 {
+    margin: 6px;
+}
 &.hidden {
   transition: transform 0.3s ease, opacity 0.2s ease;
   opacity: 0;
   z-index: -1000;
   transform: scale(0.96) translate(-50%, -46%);
-} 
+}
+#modal-cancel, #modal-fight {
+    margin: 0;
+    width: 50%;
+    height: 36px;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+#single-option {
+    border-radius: 0 0 3px 3px;
+    margin: 0;
+    width: 100%;
+    height: 36px;
+    font-size: 18px;
+    background-color: rgb(185,210,140);
+}
 }
 `
 
@@ -97,15 +123,15 @@ export default class SaveActionItem extends Component {
         return (
             <div>
                 <StyledDiv onClick={this.rollSave}>
-                    {this.state.bonus > 0 ? '+' : null}{this.state.bonus}
+                    <p>{this.state.bonus > 0 ? '+' : null}{this.state.bonus}</p>
                     <h6>{this.props.stat[0]}</h6>
                 </StyledDiv>
                 <StyledModalGroup>
                     <div id='modal' className={this.state.showRoll ? '' : 'hidden'}>
-                        <p>You rolled</p>
+                        <p className='save-p'>You rolled</p>
                         <h1>{this.state.roll}</h1>
-                        <p>on your {this.props.stat[0].toUpperCase()} save!</p>
-                        <button onClick={this.hideRoll}>Nice</button>
+                        <p className='save-p'>on your {this.props.stat[0].toUpperCase()} save!</p>
+                        <button id='single-option' onClick={this.hideRoll}>Nice</button>
                     </div>
                     <div id='overlay' onClick={this.hideRoll} className={this.state.showRoll ? '' : 'hidden'} ></div>
                 </StyledModalGroup>

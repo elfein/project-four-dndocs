@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import WeaponActionItem from './WeaponActionItem';
+import WeaponActionItem from './WeaponActionItem'
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+background-color: rgb(185,120,140);
+color: rgb(20,39,54);
+`
 
 
 export default class WeaponActionList extends Component {
@@ -34,9 +40,9 @@ export default class WeaponActionList extends Component {
         }
 
         return (
-            <div>
+            <StyledDiv>
                 {weaponList}
-            </div>
+            </StyledDiv>
         )
     }
 }

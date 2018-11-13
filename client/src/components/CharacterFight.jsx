@@ -3,12 +3,66 @@ import styled from 'styled-components'
 import axios from 'axios'
 import ActionsContainer from './ActionsContainer';
 
+const StyledDiv = styled.div`
+img.class-pic {
+    background-color: rgb(40,65,74);
+    padding: 6px;
+}
+.top {
+background-color: rgb(255,240,210);
+color: rgb(40,65,74);
+padding: 3px;
+display: flex;
+h3 {
+    margin: 5px;
+}
+}
+.hp {
+    display: flex;
+    margin: 3px 0;
+    button {
+        text-transform: uppercase;
+        font-weight: 600;
+        width: 27vw;
+        i {
+            display: block;
+            margin: 0 0 3px 0;
+        }
+    }
+    .left {
+        margin: 0 3px 0 0;
+        background: rgb(140,169,84);
+    }
+    .right {
+        margin: 0 0 0 3px;
+        background: rgb(190,129,84);
+    }
+}
+.health {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    background-color: rgb(80,175,164);
+    width: 100%;
+}
+#endfight {
+    width: 100%;
+    padding: 12px;
+    background-color: rgb(230,180,40);
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(80,65,74);
+}
+`
+
 const StyledModalGroup = styled.div`
 text-align: center;
 .type-group {
     display: flex;
     flex-wrap: wrap;
-    justify-content:space-around;
+    justify-content: center;
+    margin: 24px 0;
 }
 .damage, .healsource {
     opacity: 0.6;
@@ -52,32 +106,56 @@ text-align: center;
 .no-error {
     display: none;
 }
+color: rgb(40,65,74);
 button {
   margin: 10px 20px;
 }
-p {
-  text-align: center;
-}
-#fight {
-  color: red;
-}
+text-align: center;
 position: fixed;
 top: 50%;
 left: 50%;
 transition: transform 0.2s ease, opacity 0.2s ease;
-opacity: 100%;
+opacity: 1;
 z-index: 1010;
-padding: 30px;
 border-radius: 3px;
 background: #fff;
 transform: scale(1) translate(-50%, -50%);
 width: 360px;
+input {
+    border: 1px solid rgb(100,100,100);
+    margin: 24px 3px;
+}
+p {
+    padding: 24px 0;
+    text-transform: none;
+    font-size: 16px;
+}
+.damage-p {
+    margin: 0;
+    padding: 0;
+}
 &.hidden {
   transition: transform 0.3s ease, opacity 0.2s ease;
   opacity: 0;
   z-index: -1000;
   transform: scale(0.96) translate(-50%, -46%);
-} 
+}
+#modal-cancel, #modal-fight {
+    margin: 0;
+    width: 50%;
+    height: 36px;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+#modal-cancel {
+ border-radius: 0 0 0 3px;
+ background-color: rgb(215,190,110);
+}
+#modal-fight {
+ border-radius: 0 0 3px 0;
+ background-color: rgb(185,210,140);
+ border: none;
+}
 }
 `
 
@@ -115,7 +193,7 @@ export default class CharacterFight extends Component {
                 diff_type: '',
                 source: ''
             },
-            diffError: false, 
+            diffError: false,
             healsourceError: false
         })
         this.healOpacityChange()
@@ -199,7 +277,7 @@ export default class CharacterFight extends Component {
         event.preventDefault()
         if (this.state.newHpaction.diff
             && this.state.newHpaction.source
-            ) {
+        ) {
             this.setState({ diffError: false, healsourceError: false })
             const hpaction = await axios.post(`/api/encounters/${this.props.encounter.id}/hpactions`, this.state.newHpaction)
             await axios.put(`/api/characters/${this.props.character.id}`, { current_hp: (this.props.character.current_hp + hpaction.data.diff) })
@@ -254,31 +332,33 @@ export default class CharacterFight extends Component {
         const character = this.props.character
 
         return (
-            <div>
-                <img src={this.props.classImg} alt='classpic' />
-                <div>
-                    <h3>+{character.prof} Proficiency</h3>
-                    <h3>Encounter #{this.props.encounter.id}</h3>
-                    <button onClick={this.showEndModal}>End Fight</button>
-                    <span><h1>HP: {character.current_hp}</h1> / {character.max_hp} </span>
+            <StyledDiv>
+                <div className='top' >
+                    <img className='class-pic' src={this.props.classImg} alt='class-pic' />
+                    <div>
+                        <h3>+{character.prof} Proficiency</h3>
+                        <h3>Encounter #{this.props.encounter.id}</h3>
+                    </div>
                 </div>
-                <div>
-                    <button onClick={this.showHealModal}>Heal</button>
-                    <button onClick={this.showHitModal}>Take Hit</button>
+                <div className='hp'>
+                    <button className='left' onClick={this.showHealModal}><i className="fas fa-plus"></i> Heal</button>
+                    <span className='health'><h1>HP: {character.current_hp}</h1> /{character.max_hp} </span>
+                    <button className='right' onClick={this.showHitModal}><i className="fas fa-minus"></i> Take Hit</button>
                 </div>
+                <button id='endfight' onClick={this.showEndModal}>End Fight</button>
 
-                <ActionsContainer 
-                encounter={this.props.encounter}
-                character={character}
-                getCharacter={this.props.getCharacter} />
+                <ActionsContainer
+                    encounter={this.props.encounter}
+                    character={character}
+                    getCharacter={this.props.getCharacter} />
 
                 {/* ---------------- End Fight Modal ---------------- */}
                 <StyledModalGroup>
                     <div id='modal' className={this.state.showEndModal ? '' : 'hidden'}>
                         <p>Are you sure you want to end this fight?</p>
                         <div>
-                            <button onClick={this.hideEndModal}>Cancel</button>
-                            <button id='end' onClick={this.endFight} >Confirm</button>
+                            <button id='modal-cancel' onClick={this.hideEndModal}>Cancel</button>
+                            <button id='modal-fight' onClick={this.endFight} >Confirm</button>
                         </div>
                     </div>
                     <div id='overlay' onClick={this.hideEndModal} className={this.state.showEndModal ? '' : 'hidden'}></div>
@@ -289,7 +369,7 @@ export default class CharacterFight extends Component {
                     <div id='modal' className={this.state.showHealModal ? '' : 'hidden'}>
                         <div>
                             <span>+</span>
-                            <input type='number' name='diff' value={this.state.newHpaction.diff} onChange={this.handleChange} />
+                            <input type='number' name='diff' placeholder='Amount of Healing' value={this.state.newHpaction.diff} onChange={this.handleChange} />
                             <span>HP</span>
                         </div>
                         <h6 className={this.state.diffError ? '' : 'no-error'} >Heal amount cannot be less than zero.</h6>
@@ -305,8 +385,8 @@ export default class CharacterFight extends Component {
                             </div>
                         </div>
                         <div>
-                            <button onClick={this.hideHealModal}>Cancel</button>
-                            <input type='submit' id='heal' value='Confirm' onClick={this.handleHealSubmit} />
+                            <button id='modal-cancel' onClick={this.hideHealModal}>Cancel</button>
+                            <input type='submit' id='modal-fight' value='Confirm' onClick={this.handleHealSubmit} />
                         </div>
                     </div>
                     <div id='overlay' onClick={this.hideHealModal} className={this.state.showHealModal ? '' : 'hidden'} ></div>
@@ -317,11 +397,11 @@ export default class CharacterFight extends Component {
                     <div id='modal' className={this.state.showHitModal ? '' : 'hidden'}>
                         <div>
                             <span>-</span>
-                            <input type='number' name='diff' value={this.state.newHpaction.diff} onChange={this.handleChange} />
+                            <input placeholder='Amount of damage' type='number' name='diff' value={this.state.newHpaction.diff} onChange={this.handleChange} />
                             <span>HP</span>
                         </div>
                         <h6 className={this.state.diffError ? '' : 'no-error'} >Hit amount cannot be less than zero.</h6>
-                        <p>Damage Type:</p>
+                        <p className='damage-p'>Damage Type:</p>
                         <h6 className={this.state.diffTypeError ? '' : 'no-error'} >Damage type must be chosen.</h6>
                         <div className="type-group">
                             <div className="damage" onClick={this.changeHitType} id='Acid' >
@@ -378,12 +458,12 @@ export default class CharacterFight extends Component {
                             </div>
                         </div>
                         <div>
-                            <p>Source: (ie. "Broadsword" or "Thunderwave")</p>
-                            <input type='text' name='source' value={this.state.newHpaction.source} onChange={this.handleChange} />
+                            <p className='damage-p'>Source: (ie. "Broadsword" or "Thunderwave")</p>
+                            <input type='text' placeholder='Damage Source' name='source' value={this.state.newHpaction.source} onChange={this.handleChange} />
                         </div>
                         <div>
-                            <button onClick={this.hideHitModal}>Cancel</button>
-                            <button id='hit' onClick={this.handleHitSubmit} >Confirm</button>
+                            <button id='modal-cancel' onClick={this.hideHitModal}>Cancel</button>
+                            <button id='modal-fight' onClick={this.handleHitSubmit} >Confirm</button>
                         </div>
                     </div>
                     <div id='overlay' onClick={this.hideHitModal} className={this.state.showHitModal ? '' : 'hidden'} ></div>
@@ -394,13 +474,13 @@ export default class CharacterFight extends Component {
                     <div id='modal' className={this.props.fightMode ? 'hidden' : ''}>
                         <p>You need to enter a fight to use this screen!</p>
                         <div>
-                            <button onClick={this.props.toggleInfo}>Go Back</button>
+                            <button className='single-option' onClick={this.props.toggleInfo}>Go Back</button>
                         </div>
                     </div>
                     <div id='overlay' onClick={this.hideEndModal} className={this.props.fightMode ? 'hidden' : ''}></div>
                 </StyledModalGroup>
 
-            </div>
+            </StyledDiv>
         )
     }
 }

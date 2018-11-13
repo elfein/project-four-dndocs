@@ -6,6 +6,8 @@ const StyledDiv = styled.div`
 display: flex;
 flex-wrap: wrap;
 justify-content: center;
+background-color: rgb(185,120,140);
+padding: 3px 0;
 `
 
 export default class SaveActionList extends Component {

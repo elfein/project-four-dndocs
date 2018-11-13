@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import SpellActionItem from './SpellActionItem';
+import SpellActionItem from './SpellActionItem'
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+background-color: rgb(185,120,140);
+color: rgb(20,39,54);
+`
+
 
 export default class SpellActionList extends Component {
   state = {
@@ -36,9 +43,9 @@ export default class SpellActionList extends Component {
     }
 
     return (
-      <div>
+      <StyledDiv>
         {spellList}
-      </div>
+      </StyledDiv>
     )
   }
 }

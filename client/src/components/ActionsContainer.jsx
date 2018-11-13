@@ -2,6 +2,26 @@ import React, { Component } from 'react'
 import WeaponActionList from './WeaponActionList';
 import SaveActionList from './SaveActionList';
 import SpellActionList from './SpellActionList';
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+.selectors {
+  margin: 30px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  button {
+    width: 32vw;
+    background-color: rgb(215,190,120);
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 12px;
+  }
+  .selected {
+    background-color: rgb(185,120,140);
+    opacity: 1;
+  }
+}
+`
 
 export default class ActionsContainer extends Component {
     state = {
@@ -24,10 +44,12 @@ export default class ActionsContainer extends Component {
 
     render() {
         return (
-            <div>
-                <button onClick={this.showWeapons}>Weapons</button>
-                <button onClick={this.showSaves}>Saves</button>
-                <button onClick={this.showSpells}>Spells</button>
+            <StyledDiv>
+                <div className="selectors">
+                    <button className={this.state.showWeapons ? 'selected' : ''} onClick={this.showWeapons}>Weapons</button>
+                    <button className={this.state.showSaves ? 'selected' : ''} onClick={this.showSaves}>Saves</button>
+                    <button className={this.state.showSpells ? 'selected' : ''} onClick={this.showSpells}>Spells</button>
+                </div>
 
                 {this.state.showWeapons ?
                     <WeaponActionList
@@ -52,7 +74,7 @@ export default class ActionsContainer extends Component {
                         character={this.props.character}
                     />
                     : null}
-            </div>
+            </StyledDiv>
         )
     }
 }

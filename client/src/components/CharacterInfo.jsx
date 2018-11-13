@@ -55,7 +55,7 @@ const StyledModalGroup = styled.div`
   left: 50%;
   width: 100%;
   height: 100%;
-  background-color: rgba(50,50,55,0.5);
+  background-color: rgba(50,50,55,0.7);
   display: flex;
   opacity: 1;
   transform: scale(1) translate(-50%, -50%);
@@ -67,32 +67,47 @@ const StyledModalGroup = styled.div`
 } 
 }
 #modal {
-    button {
+    color: rgb(40,65,74);
+button {
   margin: 10px 20px;
 }
-p {
-  text-align: center;
-}
-#fight {
-  color: red;
-}
+text-align: center;
 position: fixed;
 top: 50%;
 left: 50%;
 transition: transform 0.2s ease, opacity 0.2s ease;
-opacity: 100%;
+opacity: 1;
 z-index: 1010;
-padding: 30px;
 border-radius: 3px;
 background: #fff;
 transform: scale(1) translate(-50%, -50%);
-width: 300px;
+width: 360px;
+p {
+    padding: 24px 0;
+    text-transform: none;
+    font-size: 16px;
+}
 &.hidden {
   transition: transform 0.3s ease, opacity 0.2s ease;
   opacity: 0;
   z-index: -1000;
   transform: scale(0.96) translate(-50%, -46%);
-} 
+}
+#modal-cancel, #modal-fight {
+    margin: 0;
+    width: 50%;
+    height: 36px;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+#modal-cancel {
+ border-radius: 0 0 0 3px;
+ background-color: rgb(215,190,110);
+}
+#modal-fight {
+ border-radius: 0 0 3px 0;
+ background-color: rgb(185,210,140);
+}
 }
 `
 
@@ -136,8 +151,8 @@ export default class CharacterInfo extends Component {
                 <StyledModalGroup>
                     <div id='modal' className={this.state.showFightModal ? '' : 'hidden'}>
                         <p>Ready?</p>
-                        <button onClick={this.hideFightModal}>Wait...</button>
-                        <button id='fight' onClick={this.props.startFight} >Bring it on!</button>
+                        <button id='modal-cancel' onClick={this.hideFightModal}>Wait...</button>
+                        <button id='modal-fight' onClick={this.props.startFight} >Bring it on!</button>
                     </div>
                     <div id='overlay' onClick={this.hideFightModal} className={this.state.showFightModal ? '' : 'hidden'} ></div>
                 </StyledModalGroup>
