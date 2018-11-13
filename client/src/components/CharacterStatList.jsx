@@ -6,7 +6,7 @@ const StyledDiv = styled.div`
 display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
-background-color: rgb(185,120,90);
+background-color: rgb(185,120,140);
 padding: 3px 0;
 `
 

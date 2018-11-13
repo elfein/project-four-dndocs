@@ -6,12 +6,45 @@ import CharacterSpellContainer from './CharacterSpellContainer';
 
 const StyledDiv = styled.div`
 .form {
-  background-color: rgb(255,255,255);
-  border: 1px solid black;
+  background-color: rgba(255,255,255,0.5);
+  [type~=text] {
+    width: 95vw;
+    padding: 12px 2vw;
+  }
   textarea {
-    width: 300px;
+    width: 96vw;
     height: 100px;
   }
+  p {
+    padding: 6px 0;
+  }
+  select {
+    background-color: #fff;
+    border-radius: 0;
+    margin: 0 3px;
+    padding: 2px 0;
+    border: none;
+  }
+  .cancel {
+  background-color: rgb(215,190,140);
+}
+#delete-toggle {
+  background-color: rgb(215,150,140);
+}
+button {
+  margin: 0 0 3px 0;
+}
+.submit, .cancel, #delete-toggle {
+  width: 100vw;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 9px 2vw;
+    color: rgb(40,65,74);
+    i {
+      margin: 0;
+    }
+}
 }
 .selectors {
   margin: 30px 0 0 0;
@@ -25,7 +58,7 @@ const StyledDiv = styled.div`
     padding: 12px;
   }
   .selected {
-    background-color: rgb(185,120,90);
+    background-color: rgb(185,120,140);
     opacity: 1;
   }
 }

@@ -7,6 +7,16 @@ const StyledDiv = styled.div`
 .hidden {
   display: none;
 }
+.add {
+    width: 100vw;
+    background: rgb(150,189,114);
+    font-size: 18px;
+    text-transform: uppercase;
+    color: rgb(40,65,74);
+    font-weight: 600;
+    padding: 6px 0;
+    text-align: left;
+}
 `
 
 export default class ItemList extends Component {
@@ -79,7 +89,7 @@ export default class ItemList extends Component {
             <StyledDiv>
                 {itemList}
                 <div>
-                    <button onClick={this.showNewForm}>+</button>
+                    <button className='add' onClick={this.showNewForm}>+ Add Item</button>
                 </div>
                 {this.state.showNewForm ?
                     <div className='form'>
@@ -89,7 +99,8 @@ export default class ItemList extends Component {
                             autoFocus
                             name='name'
                             value={this.state.newItem.name}
-                            onChange={this.handleChange} />
+                            onChange={this.handleChange}
+                            autoComplete='off' />
                         <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
                         <h5>Description</h5>
@@ -99,8 +110,8 @@ export default class ItemList extends Component {
                             onChange={this.handleChange} />
 
                         <div>
-                            <button onClick={this.hideNewForm}>Cancel</button>
-                            <button onClick={this.handleSubmit}>Add Item</button>
+                            <button className='cancel' onClick={this.hideNewForm}><i className="fas fa-arrow-left"></i> Cancel</button>
+                            <button className='submit' onClick={this.handleSubmit}><i className="far fa-check-square"></i> Add Item</button>
                         </div>
                     </div>
                     : null}
