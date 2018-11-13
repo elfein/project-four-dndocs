@@ -49,7 +49,8 @@ input, button {
   max-width: 600px;
 }
 [type~=text]{
-    max-width: 572px;
+    max-width: 576px;
+    padding: 12px;
 }
 }
 `

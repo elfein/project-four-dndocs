@@ -12,6 +12,11 @@ select {
     height: 30px;
     font-size: 18px;
 }
+@media (min-device-width: 1000px) {
+select {
+  max-width: 200px;
+}
+}
 `
 
 export default class Hplist extends Component {

@@ -156,6 +156,14 @@ p {
  background-color: rgb(185,210,140);
  border: none;
 }
+.single-option {
+    border-radius: 0 0 3px 3px;
+    margin: 0;
+    width: 100%;
+    height: 36px;
+    font-size: 18px;
+    background-color: rgb(185,210,140);
+}
 }
 `
 
