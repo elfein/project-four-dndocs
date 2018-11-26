@@ -115,8 +115,6 @@ export default class AttackSpellList extends Component {
         }
     }
 
-
-
     handleSubmit = async () => {
         if (this.state.newAttackSpell.name
             && this.state.newAttackSpell.die_number
