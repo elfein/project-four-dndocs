@@ -15,12 +15,26 @@ p {
 `
 
 export default class CharacterItemContainer extends Component {
+  state = {
+    apiEquipment: [],
+  }
+
   render() {
+
+    let apiWeapons = []
+    if (this.state.apiEquipment[0]) {
+      apiWeapons = this.state.apiEquipment.filter((equipment) => {
+        return equipment.equipment_category === "Weapon"
+      })
+    }
+    console.log(apiWeapons)
+
     return (
       <StyledDiv>
 
         <p>Weapons</p>
         <WeaponList
+          apiWeapons={apiWeapons}
           getCharacter={this.props.getCharacter}
           character={this.props.character}
         />

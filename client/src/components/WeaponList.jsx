@@ -31,6 +31,7 @@ const StyledDiv = styled.div`
 export default class WeaponList extends Component {
     state = {
         weapons: [],
+        apiWeapons: [],
         newWeapon: {
             name: '',
             description: '',
