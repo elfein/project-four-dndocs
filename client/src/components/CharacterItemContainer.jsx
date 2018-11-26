@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import WeaponList from './WeaponList';
 import ItemList from './ItemList';
 import styled from 'styled-components'
+import Axios from 'axios';
 
 const StyledDiv = styled.div`
 background-color: rgb(185,120,140);
@@ -16,31 +17,32 @@ p {
 
 export default class CharacterItemContainer extends Component {
   state = {
-    apiEquipment: [],
+    apiEquipment: []
+  }
+
+  getApiEquipment = async () => {
+    const apiEquipment = await Axios.get('http://cors-everywhere.herokuapp.com/http://www.dnd5eapi.co/api/equipment/')
+    this.setState({ apiEquipment: apiEquipment.data.results })
+  }
+
+  componentDidMount = () => {
+    this.getApiEquipment()
   }
 
   render() {
-
-    let apiWeapons = []
-    if (this.state.apiEquipment[0]) {
-      apiWeapons = this.state.apiEquipment.filter((equipment) => {
-        return equipment.equipment_category === "Weapon"
-      })
-    }
-    console.log(apiWeapons)
-
     return (
       <StyledDiv>
 
         <p>Weapons</p>
         <WeaponList
-          apiWeapons={apiWeapons}
+          apiEquipment={this.state.apiEquipment}
           getCharacter={this.props.getCharacter}
           character={this.props.character}
         />
 
         <p>Items</p>
         <ItemList
+          apiEquipment={this.state.apiEquipment}
           getCharacter={this.props.getCharacter}
           character={this.props.character}
         />

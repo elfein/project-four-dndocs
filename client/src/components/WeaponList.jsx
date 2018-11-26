@@ -7,6 +7,12 @@ const StyledDiv = styled.div`
 .hidden {
   display: none;
 }
+#results {
+    background-color: rgb(255,255,255);
+    border: 1px solid rgba(0,0,0,0.5);
+    width: 90%;
+    margin: 0 auto;
+}
 .add {
     width: 100vw;
     background: rgb(150,189,114);
@@ -30,8 +36,8 @@ const StyledDiv = styled.div`
 
 export default class WeaponList extends Component {
     state = {
+        possibleWeapons: [],
         weapons: [],
-        apiWeapons: [],
         newWeapon: {
             name: '',
             description: '',
@@ -72,14 +78,52 @@ export default class WeaponList extends Component {
                 skill: 'str',
                 prof: true,
                 bonus: 0
-            }
+            },
+            possibleWeapons: [],
+            nameError: false,
+            numberError: false
         })
+    }
+
+    nameSearch = (string) => {
+        if (string) {
+            const possibleWeapons = this.props.apiEquipment.filter((equipment) => {
+                return equipment['name'].toLowerCase().includes(string.toLowerCase())
+            })
+            this.setState({ possibleWeapons })
+        } else {
+            this.setState({ possibleWeapons: [] })
+        }
+    }
+
+    fillWeapon = async (weapon) => {
+        const apiWeaponUrl = weapon['url']
+        const apiWeaponData = await axios.get('https://cors-everywhere.herokuapp.com/' + apiWeaponUrl)
+        const apiWeapon = apiWeaponData.data
+        let desc = ''
+        if (apiWeapon['category_range']) {
+            desc = apiWeapon['category_range']
+        }
+        const newWeapon = {
+            name: apiWeapon['name'],
+            description: desc,
+            damage_type: 'Bludgeoning',
+            die_number: '',
+            die_type: 4,
+            skill: 'str',
+            prof: true,
+            bonus: 0
+        }
+        this.setState({ newWeapon, possibleWeapons: [] })
     }
 
     handleChange = (event) => {
         const newWeapon = { ...this.state.newWeapon }
         newWeapon[event.target.name] = event.target.value
         this.setState({ newWeapon })
+        if (event.target.name === 'name') {
+            this.nameSearch(event.target.value)
+        }
     }
 
     handleSubmit = async () => {
@@ -113,6 +157,16 @@ export default class WeaponList extends Component {
             weaponList = 'No weapons yet!'
         }
 
+        let possibleWeaponNames = []
+        if (this.state.possibleWeapons[0]) {
+            possibleWeaponNames = this.state.possibleWeapons.map((weapon, i) => {
+                return <div className='search-result' 
+                onClick={() => this.fillWeapon(weapon)}
+                key={i}>{weapon['name']}
+                </div>
+            })
+        }
+
         return (
             <StyledDiv>
                 {weaponList}
@@ -130,6 +184,7 @@ export default class WeaponList extends Component {
                             value={this.state.newWeapon.name}
                             onChange={this.handleChange}
                             autoComplete='off' />
+                        {this.state.possibleWeapons[0] ? <div id='results'>{possibleWeaponNames.slice(0, 5)}</div> : null}
                         <h6 className={this.state.nameError ? '' : 'hidden'} >Name cannot be empty.</h6>
 
                         <h5>Damage</h5>
