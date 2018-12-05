@@ -101,7 +101,6 @@ export default class WeaponList extends Component {
         const apiWeaponUrl = weapon['url']
         const apiWeaponData = await axios.get('https://cors-everywhere.herokuapp.com/' + apiWeaponUrl)
         const apiWeapon = apiWeaponData.data
-        console.log(apiWeapon)
         let newWeapon = {}
         // check for weapon
         if (apiWeapon['category_range']) {
