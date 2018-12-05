@@ -8,6 +8,7 @@ const StyledDiv = styled.div`
   display: none;
 }
 #results {
+    position: absolute;
     background-color: rgb(255,255,255);
     border: 1px solid rgba(0,0,0,0.5);
     width: 90%;
@@ -100,19 +101,38 @@ export default class WeaponList extends Component {
         const apiWeaponUrl = weapon['url']
         const apiWeaponData = await axios.get('https://cors-everywhere.herokuapp.com/' + apiWeaponUrl)
         const apiWeapon = apiWeaponData.data
-        let desc = ''
+        console.log(apiWeapon)
+        let newWeapon = {}
+        // check for weapon
         if (apiWeapon['category_range']) {
-            desc = apiWeapon['category_range']
-        }
-        const newWeapon = {
-            name: apiWeapon['name'],
-            description: desc,
-            damage_type: 'Bludgeoning',
-            die_number: '',
-            die_type: 4,
-            skill: 'str',
-            prof: true,
-            bonus: 0
+            let desc = [
+                (apiWeapon['category_range']) + ' Weapon',
+                apiWeapon['properties'].map((property, i) => {
+                    return property.name
+                }).join(', '),
+                ("Worth " + apiWeapon['cost'].quantity + apiWeapon['cost'].unit)
+            ]
+            newWeapon = {
+                name: apiWeapon['name'],
+                description: desc.join('\n'),
+                damage_type: apiWeapon['damage'].damage_type.name,
+                die_number: apiWeapon['damage'].dice_count,
+                die_type: apiWeapon['damage'].dice_value,
+                skill: 'str',
+                prof: true,
+                bonus: 0
+            }
+        } else {
+            newWeapon = {
+                name: apiWeapon['name'],
+                description: '',
+                damage_type: 'Bludgeoning',
+                die_number: '',
+                die_type: 4,
+                skill: 'str',
+                prof: true,
+                bonus: 0
+            }
         }
         this.setState({ newWeapon, possibleWeapons: [] })
     }
@@ -160,9 +180,9 @@ export default class WeaponList extends Component {
         let possibleWeaponNames = []
         if (this.state.possibleWeapons[0]) {
             possibleWeaponNames = this.state.possibleWeapons.map((weapon, i) => {
-                return <div className='search-result' 
-                onClick={() => this.fillWeapon(weapon)}
-                key={i}>{weapon['name']}
+                return <div className='search-result'
+                    onClick={() => this.fillWeapon(weapon)}
+                    key={i}>{weapon['name']}
                 </div>
             })
         }
@@ -194,14 +214,14 @@ export default class WeaponList extends Component {
                             name='die_number'
                             value={this.state.newWeapon.die_number}
                             onChange={this.handleChange} />
-                        <select name='die_type' onChange={this.handleChange}>
+                        <select value={this.state.newWeapon.die_type} name='die_type' onChange={this.handleChange}>
                             <option value={4} >d4</option>
                             <option value={6} >d6</option>
                             <option value={8} >d8</option>
                             <option value={10} >d10</option>
                             <option value={12} >d12</option>
                         </select>
-                        <select name='damage_type' onChange={this.handleChange}>
+                        <select value={this.state.newWeapon.damage_type} name='damage_type' onChange={this.handleChange}>
                             <option value='Bludgeoning'>Bludgeoning</option>
                             <option value='Piercing'>Piercing</option>
                             <option value='Slashing'>Slashing</option>
@@ -229,7 +249,7 @@ export default class WeaponList extends Component {
                         </select>
 
                         <h5>Description</h5>
-                        <input type='text'
+                        <textarea
                             name='description'
                             value={this.state.newWeapon.description}
                             onChange={this.handleChange} />
