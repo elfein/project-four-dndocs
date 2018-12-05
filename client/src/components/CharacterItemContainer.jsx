@@ -21,7 +21,7 @@ export default class CharacterItemContainer extends Component {
   }
 
   getApiEquipment = async () => {
-    const apiEquipment = await Axios.get('http://cors-everywhere.herokuapp.com/http://www.dnd5eapi.co/api/equipment/')
+    const apiEquipment = await Axios.get('https://cors-everywhere.herokuapp.com/http://www.dnd5eapi.co/api/equipment/')
     this.setState({ apiEquipment: apiEquipment.data.results })
   }
 
