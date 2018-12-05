@@ -10,7 +10,7 @@ select {
     border: none;
     width: 30vw;
     height: 30px;
-    font-size: 18px;
+    font-size: 14px;
 }
 @media (min-device-width: 1000px) {
 select {
@@ -87,7 +87,7 @@ export default class Hplist extends Component {
                 break
             default:
                 actualList = this.state.hpactions.filter((hpaction) => {
-                    return hpaction.encounter_id === this.state.selectedActionList
+                    return hpaction.encounter_id === parseInt(this.state.selectedActionList)
                 })
                 break
         }

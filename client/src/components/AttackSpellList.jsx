@@ -8,6 +8,7 @@ const StyledDiv = styled.div`
   display: none;
 }
 #results {
+    position: absolute;
     background-color: rgb(255,255,255);
     border: 1px solid rgba(0,0,0,0.5);
     width: 90%;

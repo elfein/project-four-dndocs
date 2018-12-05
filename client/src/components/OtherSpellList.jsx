@@ -18,6 +18,7 @@ const StyledDiv = styled.div`
     text-align: left;
 }
 #results {
+    position: absolute;
     background-color: rgb(255,255,255);
     border: 1px solid rgba(0,0,0,0.5);
     width: 90%;
@@ -78,7 +79,7 @@ export default class OtherSpellList extends Component {
         const apiSpell = apiSpellData.data
         const newSpell = {
             name: apiSpell['name'],
-            description: apiSpell['desc'][0],
+            description: apiSpell['desc'].join('\n'),
             prof: true,
             attack: false
         }

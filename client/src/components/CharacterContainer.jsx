@@ -40,6 +40,9 @@ footer {
       margin: 0 0 3px 0;
     }
   }
+  .selected-tab {
+    background: rgb(225,210,180);
+  }
 }
 
 img {
@@ -222,9 +225,9 @@ export default class CharacterContainer extends Component {
           : null}
 
         <footer>
-          <button onClick={this.toggleInfo}><i className="far fa-user-circle"></i> Info</button>
-          <button onClick={this.toggleFight}><i className="far fa-sun"></i> Fight</button>
-          <button onClick={this.toggleLog}><i className="far fa-clock"></i> Log</button>
+          <button className={this.state.showInfo ? "selected-tab" : ""} onClick={this.toggleInfo}><i className="far fa-user-circle"></i> Info</button>
+          <button className={this.state.showFight ? "selected-tab" : ""} onClick={this.toggleFight}><i className="far fa-sun"></i> Fight</button>
+          <button className={this.state.showLog ? "selected-tab" : ""} onClick={this.toggleLog}><i className="far fa-clock"></i> Log</button>
         </footer>
       </StyledDiv>
     )
